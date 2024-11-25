@@ -21,7 +21,7 @@ const Sidebar = () => {
       onMouseLeave={() => setIsOpen(false)} 
     >
       {/* toggle button */}
-      <div className="bg-gray-800 text-white p-4">close</div>
+      <div className="absolute top-4 right-4">close</div>
 
       <div className="h-20 flex items-center justify-center m-4">
         <Image
@@ -47,7 +47,7 @@ const Sidebar = () => {
               className="flex-shrink-0"
             />
             {isOpen && (
-              <span className="text-[#FECC0B] hover:underline font-itim text-2xl text-center duration-500">
+              <span className="text-[#FECC0B]  font-jaldi text-2xl text-center duration-500">
                 {item.text}
               </span>
             )}

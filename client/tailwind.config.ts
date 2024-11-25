@@ -13,7 +13,7 @@ export default {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        itim: ["Itim", "cursive"],
+        jaldi: ['Jaldi', 'sans-serif'],
       },
     },
   },
