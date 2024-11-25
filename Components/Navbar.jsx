@@ -3,10 +3,10 @@ import { useState } from "react";
 import Image from "next/image";
 
 const navItems = [
-  { id: 1, src: "/dashbord.svg", alt: "Dashboard", text: "Dashboard" },
-  { id: 2, src: "/faQ.svg", alt: "FAQs", text: "FAQs Management" },
-  { id: 3, src: "/Reports.svg", alt: "Reports", text: "Reports" },
-  { id: 4, src: "/settings.svg", alt: "Settings", text: "Bot Settings" },
+  { id: 1, src: "/dashbord.svg", alt: "Dashboard", text: "Dashboard", herf: "" },
+  { id: 2, src: "/faQ.svg", alt: "FAQs", text: "FAQs Management", herf: "" },
+  { id: 3, src: "/Reports.svg", alt: "Reports", text: "Reports", herf: "" },
+  { id: 4, src: "/settings.svg", alt: "Settings", text: "Bot Settings", herf: "" },
 ];
 
 const Sidebar = () => {
@@ -20,7 +20,6 @@ const Sidebar = () => {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-  
       <div className="h-20 flex items-center justify-center m-4">
         <Image
           src={"/Logo.jpg"}
@@ -31,13 +30,9 @@ const Sidebar = () => {
         />
       </div>
 
-     
-      <nav className="space-y-4 ">
+      <nav className="space-y-4">
         {navItems.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center gap-2 mx-4 "
-          >
+          <div key={item.id} className="flex items-center gap-2 mx-4">
             <Image
               src={item.src}
               alt={item.alt}
