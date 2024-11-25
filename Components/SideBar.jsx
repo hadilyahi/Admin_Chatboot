@@ -21,7 +21,7 @@ const Sidebar = () => {
       onMouseLeave={() => setIsOpen(false)} 
     >
       {/* toggle button */}
-      <div className="absolute top-4 right-4">close</div>
+      <div className="bg-gray-800 text-white p-4">close</div>
 
       <div className="h-20 flex items-center justify-center m-4">
         <Image
