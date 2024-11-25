@@ -3,36 +3,39 @@ import { useState } from "react";
 import Image from "next/image";
 
 const navItems = [
-  { id: 1, src: "/dashbord.svg", alt: "Dashboard", text: "Dashboard", herf: "" },
-  { id: 2, src: "/faQ.svg", alt: "FAQs", text: "FAQs Management", herf: "" },
-  { id: 3, src: "/Reports.svg", alt: "Reports", text: "Reports", herf: "" },
-  { id: 4, src: "/settings.svg", alt: "Settings", text: "Bot Settings", herf: "" },
+  { id: 1, src: "/dashbord.svg", alt: "Dashboard", text: "Dashboard", href: "" },
+  { id: 2, src: "/faQ.svg", alt: "FAQs", text: "FAQs Management", href: "" },
+  { id: 3, src: "/Reports.svg", alt: "Reports", text: "Reports", href: "" },
+  { id: 4, src: "/settings.svg", alt: "Settings", text: "Bot Settings", href: "" },
 ];
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false); 
 
   return (
     <div
-      className={`h-screen bg-[#22297C] text-white flex flex-col gap-40 transition-all duration-300 ${
+      className={`h-screen bg-[#22297C] text-white flex flex-col gap-40 transition-all duration-400 ease-in-out ${
         isOpen ? "w-64" : "w-20"
-      }`}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      }`} 
+      onMouseEnter={() => setIsOpen(true)} 
+      onMouseLeave={() => setIsOpen(false)} 
     >
       <div className="h-20 flex items-center justify-center m-4">
         <Image
           src={"/Logo.jpg"}
-          alt={"Logo"}
+          alt={"Logo"}  
           width={isOpen ? 100 : 60}
           height={isOpen ? 100 : 60}
-          className="rounded-full"
+          className="rounded-full transition-all duration-300 ease-in-out"
         />
       </div>
 
       <nav className="space-y-4">
         {navItems.map((item) => (
-          <div key={item.id} className="flex items-center gap-2 mx-4">
+          <div
+            key={item.id}
+            className="flex items-center gap-2 mx-4 transition-none" 
+          >
             <Image
               src={item.src}
               alt={item.alt}
