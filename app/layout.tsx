@@ -30,10 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
       >
-        {/* الناف بار الجانبي */}
+       
         <Sidebar />
 
-        {/* محتوى الصفحة */}
+        
         <main className="flex-1">{children}</main>
       </body>
     </html>
