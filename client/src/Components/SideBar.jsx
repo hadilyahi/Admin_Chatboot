@@ -1,6 +1,6 @@
 import Image from "next/image";
-import SidebarList from "./UI/SidebarList";
 import Link from "next/link";
+import SidebarLinks from "./UI/SidebarLinks";
 
 const Sidebar = () => {
   return (
@@ -10,7 +10,7 @@ const Sidebar = () => {
         <Image src={"/algeriePostLogo.svg"} alt="logo" width={100} height={100} />
       </Link>
 
-      <SidebarList />
+      <SidebarLinks />
 
       <div className="flex flex-col items-center gap-4 w-full">
         <button className="bg-gray shadow rounded-full px-4 py-2 w-full">
