@@ -6,16 +6,19 @@ import { useState } from 'react';
 import StyledModal from './StyledModal';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import StyledBtn from './StyledBtn';
+import { FaC } from 'react-icons/fa6';
+import { FaCheck } from 'react-icons/fa';
 
 const TableRow = ({ cutomer }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isChecboxSelected, setIsChecboxSelected] = useState(false);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
         <div key={cutomer.id} className='flex items-start justify-between border border-zinc-200 p-3'>
-            <div className="w-5 aspect-square flex items-center">
-                <input type="checkbox" name="selectAll" id="selectAll" />
+            <div className='flex-[0.03]'>
+                <input type="checkbox" name="selectCurrent" id="selectCurrent" onSelect={() => setIsChecboxSelected(true)} value={isChecboxSelected} onChange={() => setIsChecboxSelected(!isChecboxSelected)} />
             </div>
 
             <div className="w-5 aspect-square flex items-center">
@@ -56,7 +59,7 @@ const TableRow = ({ cutomer }) => {
                 <StyledBtn onClick={toggleMenu} className={'absolute top-[-5px] right-[-5px] bg-red-500 text-white rounded-full w-5 aspect-square flex items-center justify-center'}>X</StyledBtn>
 
                 <div className='flex flex-col gap-2'>
-                    <StyledBtn className='bg-green text-white px-4 py-1 rounded-lg'>Edit</StyledBtn>
+                    <Link href={`/workflows/edit/${cutomer.id}`} className='bg-green text-white px-4 py-1 rounded-lg'>Edit</Link>
                     <StyledBtn className='bg-red-500 text-white px-4 py-1 rounded-lg'>delete</StyledBtn>
                 </div>
             </StyledModal>
@@ -65,3 +68,4 @@ const TableRow = ({ cutomer }) => {
 }
 
 export default TableRow
+

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import SidebarLinks from "./UI/SidebarLinks";
+import StyledBtn from "./UI/StyledBtn";
 
 const Sidebar = () => {
   return (
@@ -13,9 +14,9 @@ const Sidebar = () => {
       <SidebarLinks />
 
       <div className="flex flex-col items-center gap-4 w-full">
-        <button className="bg-gray shadow rounded-full px-4 py-2 w-full">
+        <StyledBtn className="bg-gray shadow rounded-full px-4 py-2 w-full justify-center">
           Hide
-        </button>
+        </StyledBtn>
         
         {
           // !this link for logout feature if exists
