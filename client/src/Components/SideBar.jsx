@@ -1,61 +1,30 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
-
-const navItems = [
-  { id: 1, src: "/dashbord.svg", alt: "Dashboard", text: "Dashboard", href: "" },
-  { id: 2, src: "/faQ.svg", alt: "FAQs", text: "FAQs", href: "" },
-  { id: 3, src: "/Reports.svg", alt: "Reports", text: "Reports", href: "" },
-  { id: 4, src: "/settings.svg", alt: "Settings", text: "Settings", href: "" },
-];
+import SidebarList from "./UI/SidebarList";
+import Link from "next/link";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false); 
-
   return (
-    <div
-      className={`h-screen bg-[#22297C] text-white flex flex-col  gap-10 transition-all duration-400 ease-in-out relative ${
-        isOpen ? "w-64" : "w-20"
-      }`} 
-      onMouseEnter={() => setIsOpen(true)} 
-      onMouseLeave={() => setIsOpen(false)} 
-    >
-      {/* toggle button */}
-      <div className="absolute top-4 right-4">close</div>
+    <aside className="flex-[0.13] transition-all flex flex-col items-center justify-between gap-5 bg-white p-2 shadow">
+      {/* sinse it's the logo it will navigate to the home page */}
+      <Link href="/" className="logo bg-white rounded-full">
+        <Image src={"/algeriePostLogo.svg"} alt="logo" width={100} height={100} />
+      </Link>
 
-      <div className="h-20 flex items-center justify-center m-4">
-        <Image
-          src={"/Logo.jpg"}
-          alt={"Logo"}  
-          width={isOpen ? 80 : 60}
-          height={isOpen ? 80 : 60}
-          className="rounded-full transition-all duration-400 ease-in-out"
-        />
+      <SidebarList />
+
+      <div className="flex flex-col items-center gap-4 w-full">
+        <button className="bg-gray shadow rounded-full px-4 py-2 w-full">
+          Hide
+        </button>
+        
+        {
+          // !this link for logout feature if exists
+        /* <Link href="/">
+          <Image src={"/logout.svg"} alt="logout" width={40} height={40} />
+        </Link> */
+        }
       </div>
-
-      <nav className="space-y-14">
-        {navItems.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center gap-2 mx-4  cursor-pointer hover:-translate-y-2 duration-200 ease-in-out" 
-          >
-            <Image
-              src={item.src}
-              alt={item.alt}
-              width={40}
-              height={40}
-              className="flex-shrink-0"
-            />
-            {isOpen && (
-              <span className="text-[#FECC0B]  font-jaldi text-2xl text-center duration-500">
-                {item.text}
-              </span>
-            )}
-          </div>
-        ))}
-      </nav>
-    </div>
+    </aside>
   );
 };
 

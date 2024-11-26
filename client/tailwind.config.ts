@@ -18,6 +18,7 @@ export default {
         white: '#FFFFFF', // Background color 
         black: '#000000', // Text color 
         green: '#00FF00', // Dot indicating online status
+        gray: '#f3f4f6'
       },
       fontFamily: {
         jaldi: ['Jaldi', 'sans-serif'],
