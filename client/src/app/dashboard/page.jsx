@@ -2,6 +2,7 @@ import { Inputs } from "../../Components"
 import { Banner, Widget } from "../../containers"
 
 const DashboardPage = () => {
+
     return (
         // Dashboard.jsx
         <main className="flex-1">
@@ -14,7 +15,7 @@ const DashboardPage = () => {
             <Banner />
 
             {/* widget */}
-            {/* <Widget /> */}
+             <Widget />
             </div>
         </main>
     )
