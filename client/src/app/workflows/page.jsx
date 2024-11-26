@@ -11,7 +11,7 @@ const WorkflowsPage = () => {
         <main className='flex-1 px-3 flex flex-col gap-2'>
             <h2 className='text-3xl'>Workflows</h2>
 
-            <div className='flex flex-col gap-2 min-w-[800px] rounded-lg bg-white mx-auto border border-zinc-200 shadow-lg relative'>
+            <div className='flex flex-col gap-2 w-[75vw] rounded-lg bg-white mx-auto border border-zinc-200 shadow-lg overflow-hidden'>
                 <div className='flex flex-col p-3 bg-gray'>
                     <div className="flex items-stretch justify-between w-full gap-2">
                         <div className="flex items-stretch gap-2 h-10">
