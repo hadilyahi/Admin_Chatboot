@@ -59,6 +59,6 @@ const RightBar = () => {
       </div>
     </section>
   );
-};
+}
 
 export default RightBar;
