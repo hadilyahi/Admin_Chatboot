@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
 const faqSchema = new mongoose.Schema({
+  id: Number,
   question: {
     type: String,
     required: [true, "question is required"],
+    unique: true,
   },
   answer: {
     type: String,
