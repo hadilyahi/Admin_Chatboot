@@ -1,26 +1,14 @@
-import { Inputs } from "../../Components";
+import StyledSearchbar from "../../Components/UI/StyledSearchbar";
 import { Banner, RightBar, Statistics, Widget } from "../../containers";
 
 const DashboardPage = async () => {
-  // toggle rightbar
-  // const [isOpen, setIsOpen] = useState(false);
-
   return (
-    // Dashboard.jsx
-    <main
-      className={`flex-1 duration-500 ease-in`}
-    // ${!isOpen ? "px-1 md:px-10" : "px-5md:px-20"}
-    >
-      <div
-        className={`space-y-20 duration-500 ease-in`}
-        // ${
-        // isOpen ? "md:w-[85%] w-full" : "w-full"
-        // }
-      >
-        <div className="grid place-items-center w-full my-16">
-          {/* Search */}
-          <Inputs type={"text"} placeholder={"Search"} position={""} />
-        </div>
+    <main className={`flex-1`}>
+      <div className={`flex flex-col items-center w-full px-5 gap-10`}>
+
+        {/* Search bar*/}
+        <StyledSearchbar className={`w-1/2 mt-10 bg-white rounded-lg p-3 shadow-md`} />
+
         {/* Banner */}
         <Banner />
 
@@ -31,17 +19,6 @@ const DashboardPage = async () => {
         <Statistics />
       </div>
 
-      {/* toggle rightbar */}
-      {/* <button
-        className={`absolute top-[50px] ${
-          !isOpen ? "right-0" : "right-[365px]"
-        } z-10 duration-500 ease-in bg-blue text-white p-2`}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <IoMdArrowBack className={isOpen ? "rotate-180 duration-500" : ""} />
-      </button> */}
-
-      {/* rightbar */}
       <RightBar />
     </main>
   );

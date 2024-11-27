@@ -1,47 +1,35 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
+// components
+import Image from "next/image";
+import StyledBtn from "../../Components/UI/StyledBtn";
+import { Card } from "../../Components";
+
+// icons
 import {
   IoIosNotificationsOutline,
   IoMdArrowBack,
   IoMdArrowRoundForward,
 } from "react-icons/io";
-import { Card } from "../../Components";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import StyledBtn from "../../Components/UI/StyledBtn";
-import { FaArrowRight } from "react-icons/fa";
-
-const cards = [
-  { title: "Lorem ipsum", time: "1" },
-  { title: "Lorem ipsum", time: "2" },
-  { title: "Lorem ipsum", time: "3" },
-  { title: "Lorem ipsum", time: "2" },
-];
+import { cards } from "../../utils/staticData";
 
 const RightBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => { }, [isOpen]);
 
   return (
     <section
       className={`absolute top-0 z-10 duration-500 h-screen w-[100%] md:w-[400px] bg-white ease-in space-y-10 px-7 pt-[50px] ${isOpen ? "right-2" : "md:-right-[400px] -right-full"}`}
     >
       <StyledBtn
-        // className={toggleButtonClasses}
-        className={`absolute top-[50px] -left-7 z-10 duration-500 ease-in bg-blue text-white p-2`}
+        className={`absolute top-[50px] -left-7 z-10 duration-500 ease-in bg-blue text-white p-2` }
 
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle Sidebar"
+      onClick={() => setIsOpen(!isOpen)}
+      aria-label="Toggle Sidebar"
       >
-        {
-          isOpen ? (
-            <FaArrowRight />
-          ) : (
-            <IoMdArrowBack />
-          )
-        }
-      </StyledBtn>
+      <IoMdArrowBack className={`${isOpen ? "rotate-180" : ""} duration-500 ease-in`}/>
+    </StyledBtn>
 
       <div className="flex items-center justify-end cursor-pointer gap-x-4 p-2 w-full">
         <IoIosNotificationsOutline className="text-2xl" />

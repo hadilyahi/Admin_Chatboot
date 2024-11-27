@@ -35,11 +35,11 @@ const Widget = () => {
   ];
 
   return (
-    <section className="w-full space-y-5">
-      <h1 className="text-3xl text-start font-bold">Widget</h1>
+    <section className="md:w-[90%] w-full flex flex-col gap-5">
+      <h1 className="text-3xl text-start font-bold w-full">Widget</h1>
 
       {/* Content */}
-      <div className="flex flex-col md:flex-row gap-y-5  md:gap-x-5">
+      <div className="flex flex-col md:flex-row gap-y-5 md:gap-x-5">
         {widgets.map((widget, index) => (
           <div
             key={index}

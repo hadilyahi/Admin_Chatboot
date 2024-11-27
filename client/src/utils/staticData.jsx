@@ -35,3 +35,22 @@ export const tableData = [
     { id: 29, name: "Uma Stanton", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", status: "Due", rate: 70, balance: -100, deposit: 500, currency: "CAD" },
     { id: 30, name: "Victor Aminoff", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", status: "Paid", rate: 70, balance: 550, deposit: 500, currency: "CAD" },
 ];
+
+export const data = [
+    { year: "الأحد", count: 30 },
+    { year: "الإثنين", count: 45 },
+    { year: "الثلاثاء", count: 60 },
+];
+
+export const lineChartData = [
+    { title: "Category", value: 30 },
+    { title: "Work Flow", value: 50 },
+    { title: "Task", value: 70 },
+];
+
+export const cards = [
+    { title: "Lorem ipsum", time: "1" },
+    { title: "Lorem ipsum", time: "2" },
+    { title: "Lorem ipsum", time: "3" },
+    { title: "Lorem ipsum", time: "2" },
+];
