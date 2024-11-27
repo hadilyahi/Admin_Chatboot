@@ -1,47 +1,63 @@
+"use client";
+
 import {
   IoIosNotificationsOutline,
   IoMdArrowBack,
   IoMdArrowRoundForward,
 } from "react-icons/io";
 import { Card } from "../../Components";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import StyledBtn from "../../Components/UI/StyledBtn";
+import { FaArrowRight } from "react-icons/fa";
 
-const RightBar = ({ isOpen, setIsOpen }) => {
-  const cards = [
-    { title: "Lorem ipsum", time: "1" },
-    { title: "Lorem ipsum", time: "2" },
-    { title: "Lorem ipsum", time: "3" },
-    { title: "Lorem ipsum", time: "2" },
-  ];
+const cards = [
+  { title: "Lorem ipsum", time: "1" },
+  { title: "Lorem ipsum", time: "2" },
+  { title: "Lorem ipsum", time: "3" },
+  { title: "Lorem ipsum", time: "2" },
+];
 
-  const toggleButtonClasses = `absolute top-1/2 -left-1 z-30 duration-500 ease-in bg-sky-900 text-white p-2 rounded-full ${
-    isOpen ? "" : "rotate-180"
-  }`;
+const RightBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => { }, [isOpen]);
 
   return (
     <section
-      className={`fixed top-0 ${
-        isOpen ? "right-2" : "md:-right-[400px] -right-full"
-      } duration-500 h-screen w-[100%] md:w-[400px] bg-sky-900 ease-in space-y-10 px-7 overflow-y-scroll`}
+      className={`absolute top-0 z-10 duration-500 h-screen w-[100%] md:w-[400px] bg-white ease-in space-y-10 px-7 pt-[50px] ${isOpen ? "right-2" : "md:-right-[400px] -right-full"}`}
     >
-      {/* <button
-        className={toggleButtonClasses}
+      <StyledBtn
+        // className={toggleButtonClasses}
+        className={`absolute top-[50px] -left-7 z-10 duration-500 ease-in bg-blue text-white p-2`}
+
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle Sidebar"
       >
-        <IoMdArrowBack />
-      </button> */}
+        {
+          isOpen ? (
+            <FaArrowRight />
+          ) : (
+            <IoMdArrowBack />
+          )
+        }
+      </StyledBtn>
 
       <div className="flex items-center justify-end cursor-pointer gap-x-4 p-2 w-full">
-        <IoIosNotificationsOutline className="text-2xl text-white" />
-        <img
+        <IoIosNotificationsOutline className="text-2xl" />
+
+        <Image
           src="https://picsum.photos/200"
           className="w-10 h-10 rounded-full"
           alt="User Profile"
+          width={200}
+          height={200}
         />
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <h1 className="text-xl text-white">Your Lorem ipsum</h1>
+        <h1 className="text-xl">Your Lorem ipsum</h1>
+
         <p className="flex items-center gap-x-2 cursor-pointer text-yellow hover:underline hover:text-amber-500 duration-200">
           <samp>more</samp> <IoMdArrowRoundForward />
         </p>

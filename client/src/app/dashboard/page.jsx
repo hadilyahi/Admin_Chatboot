@@ -1,20 +1,21 @@
-"use client";
-
-import { useState } from "react";
 import { Inputs } from "../../Components";
 import { Banner, RightBar, Statistics, Widget } from "../../containers";
-import { IoMdArrowBack } from "react-icons/io";
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
   // toggle rightbar
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+
   return (
     // Dashboard.jsx
-    <main className={`flex-1 ${!isOpen ? "px-1 md:px-10" : "px-5md:px-20"} duration-500 ease-in`}>
+    <main
+      className={`flex-1 duration-500 ease-in`}
+    // ${!isOpen ? "px-1 md:px-10" : "px-5md:px-20"}
+    >
       <div
-        className={`space-y-20 ${
-          isOpen ? "md:w-[85%] w-full" : "w-full"
-        } duration-500 ease-in`}
+        className={`space-y-20 duration-500 ease-in`}
+        // ${
+        // isOpen ? "md:w-[85%] w-full" : "w-full"
+        // }
       >
         <div className="grid place-items-center w-full my-16">
           {/* Search */}
@@ -31,16 +32,17 @@ const DashboardPage = () => {
       </div>
 
       {/* toggle rightbar */}
-      <button
-        className={`absolute top-0 ${
+      {/* <button
+        className={`absolute top-[50px] ${
           !isOpen ? "right-0" : "right-[365px]"
-        } z-10 duration-500 ease-in bg-sky-900 text-white p-2`}
+        } z-10 duration-500 ease-in bg-blue text-white p-2`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <IoMdArrowBack className={isOpen ? "rotate-180 duration-500" : ""} />
-      </button>
+      </button> */}
+
       {/* rightbar */}
-      <RightBar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <RightBar />
     </main>
   );
 };

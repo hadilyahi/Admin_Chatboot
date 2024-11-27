@@ -17,14 +17,18 @@ export const metadata = {
 
 // components
 import Sidebar from "../Components/Sidebar";
+import Linkbar from "../Components/UI/Linkbar";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${jaldi.variable} bg-gray  overflow-x-hidden`}>
+      <body className={`${jaldi.variable} bg-gray overflow-x-hidden`}>
         <div className="w-screen h-screen flex ">
           <Sidebar />
-          <div className="flex-1  overflow-y-scroll">{children}</div>
+          <div className="flex-1 overflow-y-scroll">
+            <Linkbar />
+            {children}
+          </div>
         </div>
       </body>
     </html>
