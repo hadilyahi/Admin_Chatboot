@@ -4,6 +4,11 @@ import { IoSearch } from "react-icons/io5"
 import { tableData } from "../../utils/staticData"
 
 const WorkflowsPage = () => {
+
+    const getW = () =>{
+        fetch('http://localhost:3000/get/').then(res => res.json()).then(data => console.log(data))
+    }
+
     return (
         <main className='flex-1 px-3 flex flex-col gap-2'>
             <h2 className='text-3xl'>Workflows</h2>
