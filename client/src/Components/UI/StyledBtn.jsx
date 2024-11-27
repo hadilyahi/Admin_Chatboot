@@ -9,7 +9,7 @@
 
 const StyledBtn = ({ children, className, onClick }) => {
     return (
-        <button onClick={onClick} className={`flex items-center shadow ${className}`}>
+        <button onClick={onClick} className={`flex items-center ${className}`}>
             {children}
         </button>
     )

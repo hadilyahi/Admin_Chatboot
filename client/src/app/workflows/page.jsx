@@ -8,10 +8,9 @@ import StyledBtn from "../../Components/UI/StyledBtn"
 
 const WorkflowsPage = () => {
     return (
-        <main className='flex-1 px-3 flex flex-col gap-2'>
-            <h2 className='text-3xl'>Workflows</h2>
+        <main className='flex-1 flex flex-col gap-2'>
 
-            <div className='flex flex-col gap-2 w-[75vw] rounded-xl bg-white mx-auto border border-zinc-200 shadow-lg overflow-hidden'>
+            <div className='flex flex-col   w-full  mx-auto border border-zinc-200 p-5 '>
                 <div className='flex flex-col p-3 bg-gray'>
                     <div className="flex items-stretch justify-between w-full gap-2">
                         <div className="flex items-stretch gap-2 h-10">
@@ -24,8 +23,8 @@ const WorkflowsPage = () => {
                                 <input type="text" placeholder="Search" className="outline-none" />
                             </div>
                         </div>
-
-                        <StyledBtn className="flex items-center gap-2 bg-blue text-white px-4 py-1 rounded-lg text-sm">
+                        
+                        <StyledBtn className="flex items-center gap-2 bg-blue text-white px-4 py-1 rounded-lg text-sm hover:bg-sky-700 duration-300 hover:shadow-xl">
                             <span>
                                 <FaPlus />
                             </span>
@@ -75,7 +74,7 @@ const WorkflowsPage = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col max-h-80 overflow-y-auto">
+                <div className="flex flex-col bg-white">
                 {
                         tableData.map((cutomer) => (
                             <TableRow key={cutomer.id} cutomer={cutomer} />
