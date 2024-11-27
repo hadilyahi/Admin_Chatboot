@@ -9,7 +9,6 @@ import StyledBtn from "../../Components/UI/StyledBtn"
 const WorkflowsPage = () => {
     return (
         <main className='flex-1 flex flex-col gap-2'>
-
             <div className='flex flex-col w-full mx-auto border border-zinc-200 p-5 '>
                 <div className='flex flex-col p-3 bg-gray sticky top-[50px] z-10 border-b border-zinc-200'>
                     <div className="flex items-stretch justify-between w-full gap-2">
