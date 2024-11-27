@@ -14,4 +14,4 @@ const importData = async (data) => {
   }
 };
 
-importData(data);
+module.exports = importData;
