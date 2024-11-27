@@ -9,7 +9,7 @@ const sidebarLinks = [
     { ImgSrc: "/settings.svg", name: "Settings", href: "/settings" },
 ];
 
-const SidebarList = () => {
+const SidebarLinks = () => {
     return (
         <ul className="flex flex-col items-center gap-4 w-full flex-1">
             {sidebarLinks.map((item, idx) => (
@@ -25,4 +25,4 @@ const SidebarList = () => {
     )
 }
 
-export default SidebarList
+export default SidebarLinks

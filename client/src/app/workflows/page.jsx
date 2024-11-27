@@ -2,27 +2,28 @@ import { FaFilter, FaPlus } from "react-icons/fa"
 import { IoSearch } from "react-icons/io5"
 // import { MdKeyboardArrowRight, MdOutlineKeyboardArrowLeft } from "react-icons/md"
 import { tableData } from "../../utils/staticData"
+import TableRow from "../../Components/UI/TableRow"
+import { BsThreeDotsVertical } from "react-icons/bs"
+import StyledBtn from "../../Components/UI/StyledBtn"
 
 const WorkflowsPage = () => {
     return (
-        <main className='flex-1 px-3 flex flex-col gap-2'>
-            <h2 className='text-3xl'>Workflows</h2>
-
-            <div className='flex flex-col gap-2 min-w-[800px] rounded-lg bg-white mx-auto border border-zinc-200 shadow-lg overflow-hidden'>
-                <div className='flex flex-col p-3 bg-gray'>
+        <main className='flex-1 flex flex-col gap-2'>
+            <div className='flex flex-col w-full mx-auto border border-zinc-200 p-5 '>
+                <div className='flex flex-col p-3 bg-gray sticky top-[50px] z-10 border-b border-zinc-200'>
                     <div className="flex items-stretch justify-between w-full gap-2">
                         <div className="flex items-stretch gap-2 h-10">
-                            <button className="shadow border border-gray rounded-lg p-2 bg-white">
+                            <StyledBtn className="shadow border border-gray rounded-lg p-2 bg-white">
                                 <FaFilter />
-                            </button>
+                            </StyledBtn>
 
                             <div className="flex items-center gap-2 shadow border border-gray rounded-lg p-2 bg-white">
                                 <IoSearch />
                                 <input type="text" placeholder="Search" className="outline-none" />
                             </div>
                         </div>
-
-                        <button className="flex items-center gap-2 bg-blue text-white px-4 py-1 rounded text-sm">
+                        
+                        <StyledBtn className="flex items-center gap-2 bg-blue text-white px-4 py-1 rounded-lg text-sm hover:bg-sky-700 duration-300 hover:shadow-xl">
                             <span>
                                 <FaPlus />
                             </span>
@@ -30,7 +31,7 @@ const WorkflowsPage = () => {
                             <span>
                                 Add Workflow
                             </span>
-                        </button>
+                        </StyledBtn>
                     </div>
 
                     <div className='flex items-center justify-between pt-3'>
@@ -62,50 +63,20 @@ const WorkflowsPage = () => {
                             Balance
                         </div>
 
-                        <div className="flex-[0.2] flex justify-end">
+                        <div className="flex-[0.2] flex justify-center">
                             deposit
                         </div>
+
+                        <StyledBtn className={"flex-[0.05] w-5 aspect-square justify-center hover:bg-gray rounded-full"}>
+                            <BsThreeDotsVertical />
+                        </StyledBtn>
                     </div>
                 </div>
 
-                <div className="flex flex-col max-h-80 overflow-auto">
+                <div className="flex flex-col bg-white">
                 {
                         tableData.map((cutomer) => (
-                            <div key={cutomer.id} className='flex items-start justify-between border border-zinc-200 p-3'>
-                                <div className="w-5 aspect-square flex items-center">
-                                    <input type="checkbox" name="selectAll" id="selectAll" />
-                                </div>
-
-                                <div className="w-5 aspect-square flex items-center">
-                                    {cutomer.id}
-                                </div>
-
-                                <div className="flex-[0.2]">
-                                    {cutomer.name}
-                                </div>
-
-                                <div className="flex-[0.3]">
-                                    {cutomer.description}
-                                </div>
-
-                                <div className="flex-[0.2] flex justify-end">
-                                    <span className={`px-2 py-1 text-white rounded-full ${cutomer.status === "Paid" && "bg-green"} ${cutomer.status === "Unpaid" && "bg-red"} ${cutomer.status === "Open" && "bg-yellow"} ${cutomer.status === "Inactive" && "bg-gray"} ${cutomer.status === "Due" && "bg-red-800"}`}>
-                                        {cutomer.status}
-                                    </span>
-                                </div>
-
-                                <div className="flex-[0.2] flex justify-end">
-                                    {cutomer.rate}
-                                </div>
-
-                                <div className="flex-[0.2] flex justify-end">
-                                    {cutomer.balance}
-                                </div>
-
-                                <div className="flex-[0.2] flex justify-end">
-                                    {cutomer.deposit}
-                                </div>
-                            </div>
+                            <TableRow key={cutomer.id} cutomer={cutomer} />
                     ))
                 }
                 </div>
