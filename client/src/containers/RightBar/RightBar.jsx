@@ -29,18 +29,12 @@ const RightBar = () => {
     >
       <StyledBtn
         // className={toggleButtonClasses}
-        className={`absolute top-[50px] -left-7 z-10 duration-500 ease-in bg-blue text-white p-2`}
+        className={`absolute top-[50px] -left-7 z-10 duration-500 ease-in bg-blue text-white p-2 `}
 
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle Sidebar"
       >
-        {
-          isOpen ? (
-            <FaArrowRight />
-          ) : (
-            <IoMdArrowBack />
-          )
-        }
+            <IoMdArrowBack className={`${isOpen ? "rotate-180" : ""} duration-500 ease-in`}/>
       </StyledBtn>
 
       <div className="flex items-center justify-end cursor-pointer gap-x-4 p-2 w-full">
