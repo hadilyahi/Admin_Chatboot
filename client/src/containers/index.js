@@ -3,3 +3,6 @@ export { default as Banner } from "./Banner/Banner";
 export { default as Statistics } from "./Statistics/Statistics";
 export { default as RightBar } from "./RightBar/RightBar";
 export { default as TableHead } from "./TableHead/TableHead";
+export { default as Modals } from "./Modals/Modals";
+export { default as WorkFlowDetails } from "./WorkFlowDetails/WorkFlowDetails";
+export { default as AddQuestions } from "./AddQuestions/AddQuestions"

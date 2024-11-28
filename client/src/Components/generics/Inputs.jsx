@@ -2,11 +2,13 @@ import React from 'react'
 import { IoIosSearch } from "react-icons/io";
 
 
-const Inputs = ({type , placeholder , position}) => {
+const Inputs = ({type , placeholder , position , className , search , isFocus , onchange}) => {
   return (
-    <div className={`relative w-[50%] h-10 ${position}`}>
-        <input type={type} className='w-full bg-white p-2 h-full rounded-xl outline-none hover:outline-yellow focus:outline-yellow placeholder:text-gray-400 ' placeholder={placeholder} />
-       <IoIosSearch  className='absolute right-2 top-2 hover:cursor-pointer hover:text-blue text-xl'/>
+    <div className={`relative  ${position}`}>
+        <input type={type} onChange={onchange} onFocus={isFocus} className={`w-full bg-white  rounded outline-none  placeholder:text-gray-400 ${className}`} placeholder={placeholder} />
+       {
+        search && <IoIosSearch  className='absolute right-2 top-2 hover:cursor-pointer hover:text-blue text-xl'/>
+       }
     </div>
   )
 }

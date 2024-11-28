@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
 import { CiEdit, CiTrash } from "react-icons/ci";
@@ -6,13 +7,11 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoEyeOutline } from "react-icons/io5";
 import StyledBtn from "./StyledBtn";
 
-const TableRow = ({ data2, columns, isReadOnly }) => {
+const TableRow = ({ data2, columns, isReadOnly, getRowId }) => {
   const [activeRowId, setActiveRowId] = useState(null);
-  const [rowId , setRowId] = useState(null)
 
   const toggleMenu = (id) => {
     setActiveRowId(activeRowId === id ? null : id);
-    setRowId(id)
   };
 
   const getStatusColor = (status) => {
@@ -43,16 +42,19 @@ const TableRow = ({ data2, columns, isReadOnly }) => {
                 {column.label}
               </th>
             ))}
-            {!isReadOnly && <th className="p-3 text-left text-zinc-500">Actions</th>}
+            {!isReadOnly && (
+              <th className="p-3 text-left text-zinc-500">Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
           {data2.map((row) => (
             <tr
               key={row.id}
-              onClick={() => toggleMenu(row.id)}
+              onClick={() => toggleMenu(row.id) || getRowId(row.id)}
               className={`border-b border-zinc-200 hover:bg-gray transition-all cursor-pointer ${
-                activeRowId === row.id ? "bg-zinc-300" : ""}`}
+                activeRowId === row.id ? "bg-zinc-300" : ""
+              }`}
             >
               <td className="p-3 text-center">
                 <input
@@ -87,24 +89,29 @@ const TableRow = ({ data2, columns, isReadOnly }) => {
                     className="rounded-full aspect-square flex justify-center hover:shadow-lg relative"
                   >
                     <BsThreeDotsVertical />
-                  {activeRowId === row.id && (
-                    <div className="absolute top-4 right-1 bg-white z-10 rounded border border-gray shadow p-2">
-                      <div className="flex flex-col gap-y-2">
-                        <Link href={`/workflows/${row.id}`} className="text-2xl text-blue">
-                          <IoEyeOutline />
-                        </Link>
-                        <Link href={`/workflows/edit/${row.id}`} className="text-2xl text-green">
-                          <CiEdit />
-                        </Link>
-                        <button
-                          className="text-2xl text-red-500"
-                          onClick={() => console.log("Delete", row.id)}
-                        >
-                          <CiTrash />
-                        </button>
+                    {activeRowId === row.id && (
+                      <div className="absolute top-4 right-1 bg-white z-10 rounded border border-gray shadow p-2">
+                        <div className="flex flex-col gap-y-2">
+                          <Link
+                            href={`/workflows/${row.id}`}
+                            className="text-2xl text-blue"
+                          >
+                            <IoEyeOutline />
+                          </Link>
+                          <Link
+                            href={`/workflows/edit/${row.id}`}
+                            className="text-2xl text-green"
+                          >
+                            <CiEdit />
+                          </Link>
+                          <button
+                            className="text-2xl text-red-500"
+                          >
+                            <CiTrash />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                   </StyledBtn>
                 </td>
               )}
@@ -117,4 +124,3 @@ const TableRow = ({ data2, columns, isReadOnly }) => {
 };
 
 export default TableRow;
-
