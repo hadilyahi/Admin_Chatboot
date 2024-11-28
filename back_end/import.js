@@ -1,17 +1,10 @@
-const fs = require("fs");
-const Faq = require("./models/faqModel");
-
-const data = JSON.parse(
-  fs.readFileSync("./data/faq.json", { encoding: "utf8" })
-);
-
-const importData = async (data) => {
+const importData = async (data, model) => {
   try {
-    await Faq.create(data);
+    await model.create(data);
     console.log("data has been imported successfuly");
   } catch (err) {
     console.error(err);
   }
 };
 
-importData(data);
+module.exports = importData;
