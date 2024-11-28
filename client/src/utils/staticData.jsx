@@ -437,7 +437,7 @@ export const data2 = [
   ];
 
 export const columns = [
-    { key: "id", label: "#" },
+    { key: "displayId", label: "#" },
     { key: "name", label: "Name" },
     { key: "description", label: "Description" },
     { key: "status", label: "Status", isStatus: true }, // Special handling for the status column
