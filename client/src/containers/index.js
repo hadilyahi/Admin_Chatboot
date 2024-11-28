@@ -5,4 +5,6 @@ export { default as RightBar } from "./RightBar/RightBar";
 export { default as TableHead } from "./TableHead/TableHead";
 export { default as Modals } from "./Modals/Modals";
 export { default as WorkFlowDetails } from "./WorkFlowDetails/WorkFlowDetails";
-export { default as AddQuestions } from "./AddQuestions/AddQuestions"
+export { default as AddQuestions } from "./AddQuestions/AddQuestions";
+export { default as AddWorkFlow } from "./AddWorkFlow/AddWorkFlow";
+export { default as WorkFlowPage } from "./WorkFlowPage/WorkFlowPage"; 

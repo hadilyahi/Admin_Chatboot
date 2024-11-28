@@ -40,7 +40,7 @@ const WorkflowPage = async ({ params }) => {
         </div>
 
       </div>
-        <WorkFlowDetails />
+        <WorkFlowDetails  />
     </main>
   );
 };
