@@ -10,9 +10,10 @@ import { showErrorAlert, showSuccessAlert } from "../../utils/alert";
 const WorkFlowDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
+  const [isDeleteQuestionOpen, setIsDeleteQuestionOpen] = useState(false);
   const [rowId, setRowId] = useState(null);
 
-  const onSelectRow = (id) => setRowId(id);
+  const onSelectRow = (id) => setRowId((prev) => (prev === id ? null : id));
   const onEdit = () => {
     if (rowId) {
       setIsOpen(true);
@@ -22,16 +23,17 @@ const WorkFlowDetails = () => {
   };
   const onDelete = () => {
     if (rowId) {
-      showSuccessAlert("goo job :)");
+      setIsDeleteQuestionOpen(true);
     } else {
       showErrorAlert("you should be select a row");
     }
   };
-  const onAddQuestion = ()=> setIsAddQuestionOpen(true)
+  const onAddQuestion = () => setIsAddQuestionOpen(true);
 
   const onClose = () => {
     setIsOpen(false);
     setIsAddQuestionOpen(false);
+    setIsDeleteQuestionOpen(false);
   };
 
   const btn = [
@@ -67,6 +69,7 @@ const WorkFlowDetails = () => {
           data2={data3}
           isReadOnly={true}
           getRowId={onSelectRow}
+          rowId={rowId}
         />
       </div>
       {/* Edit Modal */}
@@ -88,10 +91,10 @@ const WorkFlowDetails = () => {
         <div className="w-full grid place-items-center">
           <StyledBtn
             className={
-              " bg-green text-white rounded px-3 py-1 self-center gap-x-2 text-lg "
+              "bg-teal-600 text-white rounded px-3 py-1 self-center gap-x-2 text-lg"
             }
           >
-            submit
+            Submit
             <FaSave />
           </StyledBtn>
         </div>
@@ -100,6 +103,27 @@ const WorkFlowDetails = () => {
       {/* Add Question */}
       <Modals isOpen={isAddQuestionOpen} onClose={onClose}>
         <AddQuestions />
+      </Modals>
+      {/* Delete Question */}
+      <Modals isOpen={isDeleteQuestionOpen} onClose={onClose}>
+        <h1 className="w-full text-zinc-700 font-bold text-2xl text-center">
+          Delete Question
+        </h1>
+        <div className="flex justify-center items-center gap-x-3  rounded p-5">
+          <h1 className="text-lg">
+            Are you sure you want to delete this question ?
+          </h1>
+        </div>
+        <div className="w-full grid place-items-center">
+          <StyledBtn
+            className={
+              " bg-red-600 text-white rounded px-3 py-1 self-center gap-x-2 text-lg "
+            }
+          >
+            Delete
+            <FaTrash />
+          </StyledBtn>
+        </div>
       </Modals>
     </>
   );

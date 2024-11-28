@@ -7,7 +7,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoEyeOutline } from "react-icons/io5";
 import StyledBtn from "./StyledBtn";
 
-const TableRow = ({ data2, columns, isReadOnly, getRowId }) => {
+const TableRow = ({ data2, columns, isReadOnly, getRowId , rowId }) => {
   const [activeRowId, setActiveRowId] = useState(null);
 
   const toggleMenu = (id) => {
@@ -51,9 +51,9 @@ const TableRow = ({ data2, columns, isReadOnly, getRowId }) => {
           {data2.map((row) => (
             <tr
               key={row.id}
-              onClick={() => toggleMenu(row.id) || getRowId(row.id)}
-              className={`border-b border-zinc-200 hover:bg-gray transition-all cursor-pointer ${
-                activeRowId === row.id ? "bg-zinc-300" : ""
+              onClick={() => getRowId(row.id)}
+              className={`border-b border-zinc-200 transition-all cursor-pointer ${
+                rowId === row.id ? "bg-zinc-300" : "hover:bg-gray "
               }`}
             >
               <td className="p-3 text-center">

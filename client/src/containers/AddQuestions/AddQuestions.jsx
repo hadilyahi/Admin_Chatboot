@@ -36,7 +36,7 @@ const AddQuestions = () => {
           value={searchQuery}
           onchange={handleSearchChange}
         />
-        <StyledBtn className="bg-cyan-700 text-white rounded gap-x-2 px-5 py-2">
+        <StyledBtn className="bg-teal-600 text-white rounded px-3 py-1 self-center gap-x-2 text-lg">
           Add <FaSave />
         </StyledBtn>
       </div>
