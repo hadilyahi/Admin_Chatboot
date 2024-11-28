@@ -9,12 +9,12 @@
 import { IoSearch } from "react-icons/io5"
 import Inputs from "../generics/Inputs"
 
-const StyledSearchbar = ({ className }) => {
+const StyledSearchbar = ({ className , onClick }) => {
     return (
         <div className={`flex items-center gap-2 ${className}`}>
             <IoSearch />
 
-            <input type="search" placeholder="Search" className="outline-none bg-transparent" />
+            <input type="search" placeholder="Search" className="outline-none bg-transparent" onClick={onClick} />
         </div>
     )
 }

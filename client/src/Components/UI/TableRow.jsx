@@ -1,104 +1,120 @@
 "use client";
-
+import React, { useState } from "react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { CiEdit } from "react-icons/ci";
-import { CiTrash } from "react-icons/ci";
+import { CiEdit, CiTrash } from "react-icons/ci";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoEyeOutline } from "react-icons/io5";
 import StyledBtn from "./StyledBtn";
 
-const TableRow = ({ cutomer }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isChecboxSelected, setIsChecboxSelected] = useState(false);
+const TableRow = ({ data2, columns, isReadOnly }) => {
+  const [activeRowId, setActiveRowId] = useState(null);
+  const [rowId , setRowId] = useState(null)
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (isMenuOpen && !e.target.closest(".menu-container")) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [isMenuOpen]);
-
-  // Map for dynamic status colors
-  const statusColors = {
-    Paid: "bg-green",
-    Unpaid: "bg-red",
-    Open: "bg-yellow",
-    Inactive: "bg-zinc-500",
-    Due: "bg-red-600",
+  const toggleMenu = (id) => {
+    setActiveRowId(activeRowId === id ? null : id);
+    setRowId(id)
   };
 
-  const statusColor = statusColors[cutomer.status] || "bg-gray-300";
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Open":
+        return "bg-yellow text-white";
+      case "Paid":
+        return "bg-green text-white";
+      case "Inactive":
+        return "bg-gray text-black";
+      case "Due":
+        return "bg-red-600 text-white";
+      default:
+        return "";
+    }
+  };
 
   return (
-    <div
-      key={cutomer.id}
-      className="flex items-start justify-between border border-zinc-200 p-3"
-    >
-      <div className="flex-[0.03]">
-        <input
-          type="checkbox"
-          name="selectCurrent"
-          id="selectCurrent"
-          checked={isChecboxSelected}
-          onChange={() => setIsChecboxSelected(!isChecboxSelected)}
-        />
-      </div>
-
-      <div className="w-5 aspect-square flex items-center">{cutomer.id}</div>
-
-      <Link
-        href={`/workflows/${cutomer.id}`}
-        className="flex-[0.2] hover:underline"
-      >
-        {cutomer.name}
-      </Link>
-
-      <div className="flex-[0.3]">{cutomer.description}</div>
-
-      <div className="flex-[0.2] flex justify-end">
-        <span
-          className={`px-2 py-1 text-white rounded-full ${statusColor}`}
-        >
-          {cutomer.status}
-        </span>
-      </div>
-
-      <div className="flex-[0.2] flex justify-end">{cutomer.rate}</div>
-
-      <div className="flex-[0.2] flex justify-end">{cutomer.balance}</div>
-
-      <div className="flex-[0.2] flex justify-center">{cutomer.deposit}</div>
-
-      <StyledBtn
-        onClick={toggleMenu}
-        className={`rounded-full flex-[0.05] aspect-square justify-center hover:shadow-lg relative`}
-      >
-        <BsThreeDotsVertical />
-        <div
-          className={`menu-container bg-white z-10 rounded border border-gray shadow p-2 ${
-            isMenuOpen ? "absolute top-14 right-7" : "hidden"
-          }`}
-        >
-          <div className="flex flex-row-reverse gap-x-2">
-            <Link
-              href={`/workflows/edit/${cutomer.id}`}
-              className="text-3xl hover:text-green hover:animate-pulse"
+    <div className="overflow-y-auto max-h-screen">
+      <table className="min-w-full bg-white border border-zinc-200 rounded-lg">
+        <thead className="bg-gray border-b border-zinc-200">
+          <tr>
+            <th className="p-3 text-center">
+              <input type="checkbox" name="select-all" />
+            </th>
+            {columns.map((column) => (
+              <th key={column.key} className="p-3 text-left text-zinc-500">
+                {column.label}
+              </th>
+            ))}
+            {!isReadOnly && <th className="p-3 text-left text-zinc-500">Actions</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {data2.map((row) => (
+            <tr
+              key={row.id}
+              onClick={() => toggleMenu(row.id)}
+              className={`border-b border-zinc-200 hover:bg-gray transition-all cursor-pointer ${
+                activeRowId === row.id ? "bg-zinc-300" : ""}`}
             >
-              <CiEdit />
-            </Link>
-            <CiTrash className="text-3xl hover:text-red-500 hover:animate-pulse" />
-          </div>
-        </div>
-      </StyledBtn>
+              <td className="p-3 text-center">
+                <input
+                  type="checkbox"
+                  name={`select-row-${row.id}`}
+                  id={`check-${row.id}`}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </td>
+              {columns.map((column) => (
+                <td key={column.key} className="p-3">
+                  {column.isStatus ? (
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(
+                        row[column.key]
+                      )}`}
+                    >
+                      {row[column.key]}
+                    </span>
+                  ) : (
+                    row[column.key]
+                  )}
+                </td>
+              ))}
+              {!isReadOnly && (
+                <td className="p-3 relative">
+                  <StyledBtn
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleMenu(row.id);
+                    }}
+                    className="rounded-full aspect-square flex justify-center hover:shadow-lg relative"
+                  >
+                    <BsThreeDotsVertical />
+                  {activeRowId === row.id && (
+                    <div className="absolute top-4 right-1 bg-white z-10 rounded border border-gray shadow p-2">
+                      <div className="flex flex-col gap-y-2">
+                        <Link href={`/workflows/${row.id}`} className="text-2xl text-blue">
+                          <IoEyeOutline />
+                        </Link>
+                        <Link href={`/workflows/edit/${row.id}`} className="text-2xl text-green">
+                          <CiEdit />
+                        </Link>
+                        <button
+                          className="text-2xl text-red-500"
+                          onClick={() => console.log("Delete", row.id)}
+                        >
+                          <CiTrash />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  </StyledBtn>
+                </td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
 export default TableRow;
+

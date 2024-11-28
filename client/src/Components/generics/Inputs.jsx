@@ -11,4 +11,4 @@ const Inputs = ({type , placeholder , position}) => {
   )
 }
 
-export default Inputs
+export default Inputs;
