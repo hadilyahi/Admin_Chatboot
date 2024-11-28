@@ -3,6 +3,9 @@
  * remove them in production
  */
 
+import { FaUserCheck, FaUserFriends } from "react-icons/fa";
+import { FaDisplay } from "react-icons/fa6";
+
 export const tableData = [
     { id: 1, name: "Ann Culhane", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", status: "Open", rate: 70, balance: -270, deposit: 500, currency: "CAD" },
     { id: 2, name: "Ahmad Rosser", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", status: "Paid", rate: 70, balance: 270, deposit: 500, currency: "CAD" },
@@ -54,3 +57,28 @@ export const cards = [
     { title: "Lorem ipsum", time: "3" },
     { title: "Lorem ipsum", time: "2" },
 ];
+
+// this constant used in faqs page
+export const cardData = [
+    {
+        title: "total users",
+        value: "1,000",
+        status: "up",
+        percentage: "10%",
+        icon: <FaUserFriends />
+    },
+    {
+        title: "members",
+        value: "1,000",
+        status: "down",
+        percentage: "10%",
+        icon: <FaUserCheck />
+    },
+    {
+        title: "active now",
+        value: "1,000",
+        status: "up",
+        percentage: "10%",
+        icon: <FaDisplay />
+    }
+]

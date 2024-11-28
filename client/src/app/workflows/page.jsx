@@ -5,12 +5,45 @@ import { tableData } from "../../utils/staticData"
 import TableRow from "../../Components/UI/TableRow"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import StyledBtn from "../../Components/UI/StyledBtn"
+import Table from "../../Components/Table"
+
+const tableHeader = {
+    id: "#",
+    name: "name",
+    description: "description",
+    status: "status",
+    rate: "rate",
+    balance: "balance",
+    deposit: "deposit",
+    currency: "currency",
+}
+
+const sellsStyle = {
+    id: "w-5 aspect-square flex items-center",
+    name: "flex-[0.2]",
+    description: "flex-[0.3]",
+    status: "flex-[0.2] flex justify-end ",
+    rate: "flex-[0.2] flex justify-end",
+    balance: "flex-[0.2] flex justify-end",
+    deposit: "flex-[0.2] flex justify-center",
+    currency: "flex-[0.1] flex justify-end",
+}
+
+const tableOptions = {
+    search: true,
+    filter: true,
+    optionsBtn: false,
+    checkbox: true,
+    new: true,
+}
 
 const WorkflowsPage = () => {
     return (
         <main className='flex-1 flex flex-col gap-2'>
 
-            <div className='flex flex-col w-full mx-auto border border-zinc-200 p-5 '>
+            <Table header={tableHeader} data={tableData} options={tableOptions} sellsStyle={sellsStyle} />
+
+            {/* <div className='flex flex-col w-full mx-auto border border-zinc-200 p-5 '>
                 <div className='flex flex-col p-3 bg-gray sticky top-[50px] z-10 border-b border-zinc-200'>
                     <div className="flex items-stretch justify-between w-full gap-2">
                         <div className="flex items-stretch gap-2 h-10">
@@ -82,7 +115,7 @@ const WorkflowsPage = () => {
                 }
                 </div>
 
-                {/* this section is for pagination feature will be added in future */}
+                {/* this section is for pagination feature will be added in future
                 {/* <div className="flex items-center justify-between p-3 bg-gray">
                     <span>1-10 of 100</span>
 
@@ -100,8 +133,8 @@ const WorkflowsPage = () => {
                         </div>
                     </div>
 
-                </div> */}
-            </div>
+                </div>
+            </div> */}
         </main>
     )
 }
