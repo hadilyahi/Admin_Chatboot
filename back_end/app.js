@@ -6,10 +6,14 @@ const cookieParser = require("cookie-parser");
 const globalErrorHandling = require("./controllers/errorController");
 const importData = require("./import");
 const fs = require("fs");
+const cors = require("cors");
 
 dotenv.config({ path: ".env" });
 
 const app = express();
+
+// Cors Config
+app.use(cors());
 
 // Parsing Incoming Data
 app.use(express.json());
