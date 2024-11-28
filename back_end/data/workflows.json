@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Onboarding Process",
+    "description": "A workflow for onboarding new employees to the company.",
+    "category": "HR",
+    "status": "Created",
+    "questions": []
+  },
+  {
+    "name": "Customer Feedback Survey",
+    "description": "A workflow to gather customer feedback on our new product line.",
+    "category": "Marketing",
+    "status": "Running",
+    "questions": []
+  },
+  {
+    "name": "IT Support Ticket Workflow",
+    "description": "Workflow for handling IT support tickets within the organization.",
+    "category": "IT",
+    "status": "Created",
+    "questions": []
+  },
+  {
+    "name": "Employee Training Module",
+    "description": "A workflow for training employees on workplace safety and regulations.",
+    "category": "Training",
+    "status": "Running",
+    "questions": []
+  }
+]

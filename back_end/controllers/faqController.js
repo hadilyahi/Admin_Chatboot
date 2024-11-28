@@ -33,7 +33,6 @@ const createFaq = asyncHandler(async (req, res, next) => {
 
 const getFaq = asyncHandler(async (req, res) => {
   const { question } = req.body;
-  console.log(question);
 
   if (!question) {
     return next(new AppError("No question has been provided", 404));
