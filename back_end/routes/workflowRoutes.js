@@ -5,11 +5,13 @@ const {
   createWorkflow,
   updateWorkflow,
   deleteWorkflows,
+  getOneWorkflow,
 } = require("./../controllers/workflowController");
 
 const router = express.Router();
 
 router.get("/get-workflows", getWorkflows);
+router.get("/get-one-workflow/:workflowId", getOneWorkflow);
 router.post("/create-workflow", createWorkflow);
 router.delete("/delete-workflow/:id", deleteWorkflow);
 router.delete("/delete-workflows", deleteWorkflows);

@@ -1,6 +1,7 @@
 import { WorkFlowPage } from "../../containers";
 
 const WorkflowsPage = () => {
+    
 
   return <WorkFlowPage />;
 };

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const sidebarLinks = [
-    { ImgSrc: "/dashbord.svg", name: "Dashboard", href: "/dashboard" },
+    { ImgSrc: "/dashbord.svg", name: "Dashboard", href: "/" },
     { ImgSrc: "/dashbord.svg", name: "Workflows", href: "/workflows" },
     { ImgSrc: "/faQ.svg", name: "FAQs", href: "/faqs" },
     { ImgSrc: "/Reports.svg", name: "Reports", href: "/reports" },

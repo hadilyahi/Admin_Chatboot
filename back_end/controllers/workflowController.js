@@ -15,6 +15,20 @@ const getWorkflows = asyncHandler(async (req, res) => {
   });
 });
 
+const getOneWorkflow = asyncHandler(async (req, res, next) => {
+  const workflowId = req.params.workflowId;
+  const workflow = await Workflow.findById(workflowId);
+
+  if (!workflow) {
+    return next(new AppError("error fetching the workflow", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: { workflow },
+  });
+});
+
 const createWorkflow = asyncHandler(async (req, res, next) => {
   const { name, description, status } = req.body;
   if ((!name || !description, !status)) {
@@ -75,4 +89,5 @@ module.exports = {
   deleteWorkflow,
   updateWorkflow,
   deleteWorkflows,
+  getOneWorkflow,
 };

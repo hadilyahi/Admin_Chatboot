@@ -5,9 +5,9 @@ import Link from "next/link";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoEyeOutline } from "react-icons/io5";
-import StyledBtn from "./StyledBtn";
+import StyledBtn from "../../Components/UI/StyledBtn";
 
-const TableRow = ({ data2, columns, isReadOnly, getRowId , rowId }) => {
+const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId }) => {
   const [activeRowId, setActiveRowId] = useState(null);
 
   const toggleMenu = (id) => {
@@ -48,7 +48,7 @@ const TableRow = ({ data2, columns, isReadOnly, getRowId , rowId }) => {
           </tr>
         </thead>
         <tbody>
-          {data2.map((row) => (
+          {data2?.map((row) => (
             <tr
               key={row.id}
               onClick={() => getRowId(row.id)}
@@ -104,9 +104,7 @@ const TableRow = ({ data2, columns, isReadOnly, getRowId , rowId }) => {
                           >
                             <CiEdit />
                           </Link>
-                          <button
-                            className="text-2xl text-red-500"
-                          >
+                          <button className="text-2xl text-red-500">
                             <CiTrash />
                           </button>
                         </div>
