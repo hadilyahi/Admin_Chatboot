@@ -1,9 +1,9 @@
+import {FaqsPageContainer} from "../../containers"
+
 const FAQsPage = () => {
     return (
-        <main className="flex-1">
-            <h1 className='text-3xl'>FAQs</h1>
-        </main>
+        <FaqsPageContainer />
     )
 }
 
-export default FAQsPage
+export default FAQsPage;

@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { Inputs } from "../../Components";
 import StyledBtn from "../../Components/UI/StyledBtn";
 
-const AddWorkFlow = () => {
+const AddWorkFlow = ({ type = "Add" }) => {
   const [formData, setFormData] = useState({
     name: "",
     category: "",
     type: "",
-    status: false,
+    status: "open", // Default value
   });
 
   const handleChange = (e) => {
@@ -28,7 +28,7 @@ const AddWorkFlow = () => {
   return (
     <div className="w-[600px] h-fit px-3">
       <h1 className="w-full text-center text-zinc-700 text-2xl font-bold">
-        Add WorkFlow
+        {type === "Add" ? "Add" : "Update"} WorkFlow
       </h1>
 
       {/* Form */}
@@ -85,36 +85,34 @@ const AddWorkFlow = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="">
-            {/* <Inputs
-              className="rounded border px-2"
-              type=""
-              name="status"
-              id="status"
-              checked={formData.status}
-              onChange={handleChange}
-            /> */}
+          <div>
             <label
               htmlFor="status"
-              className="text-sm font-medium text-gray-700"
+              className="block mb-1 text-sm font-medium text-gray-700"
             >
               Status
             </label>
-            <select name="" id="" className="rounded border border-gray px-2 h-10 w-full outline-none">
-              <option value="">open</option>
-              <option value="">paid</option>
-              <option value="">inactive</option>
-              <option value="">due</option>
+            <select
+              name="status"
+              id="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="rounded border border-gray px-2 h-10 w-full outline-none"
+            >
+              <option value="open">Open</option>
+              <option value="paid">Paid</option>
+              <option value="inactive">Inactive</option>
+              <option value="due">Due</option>
             </select>
           </div>
         </div>
 
-        {/* submited btn */}
+        {/* Submit button */}
         <StyledBtn
           type="submit"
-          className="mt-4 w-full justify-center bg-blue text-white py-2 rounded hover:bg-blue transition duration-300"
+          className="mt-4 w-full justify-center bg-blue text-white py-2 rounded hover:bg-blue-600 transition duration-300"
         >
-          <h1>Submit</h1>
+          <h1>{type === "Add" ? "Save" : "Update"}</h1>
         </StyledBtn>
       </form>
     </div>

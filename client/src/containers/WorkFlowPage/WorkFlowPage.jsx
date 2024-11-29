@@ -5,9 +5,13 @@ import { TableRow } from "../../Components";
 import { AddWorkFlow, Modals, TableHead } from "../../containers";
 // api
 import { getWorkflows } from "../../utils/api/workflows";
+import { showErrorAlert } from "../../utils/alert";
+import Delete from "../Delete/Delete";
 
 const WorkFlowPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen , setIsDeleteOpen] = useState(false)
   const [data, setData] = useState([]);
 
   const columns = [
@@ -20,12 +24,33 @@ const WorkFlowPage = () => {
     { key: "deposit", label: "Deposit" },
   ];
 
-  const onClose = () => setIsOpen(false);
+  const onClose = () => {
+    setIsOpen(false);
+    setIsEditOpen(false);
+    setIsDeleteOpen(false);
+  };
+
+  const onEditeWorkflow = (id) => {
+    if (id) {
+      setIsEditOpen(true);
+    } else {
+      showErrorAlert("error in edite workflow");
+    }
+  };
+
+  const onDeleteWorkflow = (id) => {
+    if (id) {
+      setIsDeleteOpen(true);
+    } else {
+      showErrorAlert("error in delete workflow");
+    }
+  };
+
   const btn = [
     {
       icon: <FaPlus />,
       title: "Add workflow",
-      className: "bg-blue text-white hover:bg-sky-700",
+      className: "bg-cyan-800 text-white hover:bg-sky-700",
     },
   ];
 
@@ -58,9 +83,32 @@ const WorkFlowPage = () => {
         btn={btn}
         onAddWorkflow={() => setIsOpen(true)}
       />
-      <TableRow columns={columns} data2={data} />
+
+      <TableRow
+        columns={columns}
+        data2={data}
+        onEdit={onEditeWorkflow}
+        onDelete={onDeleteWorkflow}
+      />
+      {/* add */}
       <Modals isOpen={isOpen} onClose={onClose}>
-        <AddWorkFlow />
+        <AddWorkFlow type="Add" />
+      </Modals>
+
+      {/* update */}
+      <Modals isOpen={isEditOpen} onClose={onClose}>
+        <AddWorkFlow type="Update" />
+      </Modals> 
+
+      {/* delete */}
+      <Modals 
+      isOpen={isDeleteOpen}
+      onClose={onClose}
+      >
+        <Delete
+        titelDelete={"workflow"}
+        question={"Are you sure to delete this workflow ?"}
+        />
       </Modals>
     </main>
   );

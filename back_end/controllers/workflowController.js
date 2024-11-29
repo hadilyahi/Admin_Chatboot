@@ -17,7 +17,7 @@ const getWorkflows = asyncHandler(async (req, res) => {
 
 const getOneWorkflow = asyncHandler(async (req, res, next) => {
   const workflowId = req.params.workflowId;
-  const workflow = await Workflow.findById(workflowId);
+  const workflow = await Workflow.findById(workflowId).populate("questions");
 
   if (!workflow) {
     return next(new AppError("error fetching the workflow", 404));

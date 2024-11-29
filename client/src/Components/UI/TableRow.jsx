@@ -7,7 +7,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoEyeOutline } from "react-icons/io5";
 import StyledBtn from "../../Components/UI/StyledBtn";
 
-const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId }) => {
+const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId , onEdit , onDelete }) => {
   const [activeRowId, setActiveRowId] = useState(null);
 
   const toggleMenu = (id) => {
@@ -30,7 +30,7 @@ const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId }) => {
   };
 
   return (
-    <div className="overflow-y-auto max-h-screen">
+    <div className="overflow-y-auto h-screen">
       <table className="min-w-full bg-white border border-zinc-200 rounded-lg">
         <thead className="bg-gray border-b border-zinc-200">
           <tr>
@@ -98,13 +98,14 @@ const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId }) => {
                           >
                             <IoEyeOutline />
                           </Link>
-                          <Link
-                            href={`/workflows/edit/${row.id}`}
+                          <button
+                            // href={`/workflows/edit/${row.id}`}
                             className="text-2xl text-green"
+                            onClick={() => onEdit(row.id)}
                           >
                             <CiEdit />
-                          </Link>
-                          <button className="text-2xl text-red-500">
+                          </button>
+                          <button onClick={() => onDelete(row.id)} className="text-2xl text-red-500">
                             <CiTrash />
                           </button>
                         </div>

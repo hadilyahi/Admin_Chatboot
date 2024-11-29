@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { Inputs, TableRow } from "../../Components";
 import { AddQuestions, Modals, TableHead } from "../../containers";
-import { data3 } from "../../utils/staticData";
 import StyledBtn from "../../Components/UI/StyledBtn";
 import { showErrorAlert, showSuccessAlert } from "../../utils/alert";
 import { useParams, useRouter } from "next/navigation";
 import { getQuestuonByWorkflowId } from "../../utils/api/workflows";
+import Delete from "../Delete/Delete";
 
 const WorkFlowDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,12 +20,12 @@ const WorkFlowDetails = () => {
   const columns = [
     { key: "id", label: "#" },
     { key: "name", label: "Name" },
-    { key: "description", label: "Description" },
-    { key: "type", label: "Type" },
+    { key: "answer", label: "Answer" },
+    { key: "category", label: "Category" },
     // { key: "isRequired" , label: "Required" },
     { key: "createdAt", label: "Created At" },
     { key: "updatedAt", label: "Updated At" },
-    // { key: "isSkipped" , label: "Skipped" },
+    { key: "isSkipped", label: "Skipped" },
     // { key: "questionsOrder" , label: "Q.O" },
   ];
 
@@ -38,24 +38,24 @@ const WorkFlowDetails = () => {
     }
   };
   const { workflowId } = useParams();
-  console.log(workflowId);
+
   useEffect(() => {
     getQuestuonByWorkflowId(workflowId)
       .then((data) => {
-        // const formattingData = data.data.workflow.questions.map((ques) => ({
-        //       id: ques._id,
-        //       name: ques.name,
-        //       description: ques.description,
-        //       type: ques.category,
-        //       createdAt: ques.createdAt,
-        //       updatedAt: ques.updatedAt,
-        //     }))
-
-        // setData(formattingData);
+        const workflowData = data.data.workflow;
+        const formattingData = workflowData.questions.map((ques) => ({
+          id: ques._id,
+          name: ques.name,
+          answer: ques.answer,
+          category: ques.category,
+          isSkipped: ques.isSkipped == true ? "True" : "False",
+          createdAt: new Date(ques.createdAt).toLocaleString(),
+          updatedAt: new Date(ques.createdAt).toLocaleString(),
+        }));
+        setData(formattingData);
         console.log(data);
         setWorkflowData(data.data.workflow);
       })
-
       .catch((error) => {
         console.error(error);
       });
@@ -70,11 +70,12 @@ const WorkFlowDetails = () => {
   };
   const onAddQuestion = () => setIsAddQuestionOpen(true);
 
-  const onClose = () => {
-    setIsOpen(false);
-    setIsAddQuestionOpen(false);
-    setIsDeleteQuestionOpen(false);
-  };
+  const resetModals = () => (
+    setIsOpen(false),
+    setIsAddQuestionOpen(false),
+    setIsDeleteQuestionOpen(false)
+  );
+  const onClose = resetModals;
 
   const btn = [
     {
@@ -99,12 +100,12 @@ const WorkFlowDetails = () => {
         <div className="w-full rounded-xl bg-white shadow-md p-5">
           <div className="mb-4">
             <h1 className="text-3xl font-bold">{workflowData.name}</h1>
-
             <div className="flex items-center justify-between">
-              <p className="text-sm">{workflowData.updatedAt}</p>
+              <p className="text-sm">
+                {new Date(workflowData.createdAt).toDateString()}
+              </p>
             </div>
           </div>
-
           <p>{workflowData.description}</p>
         </div>
 
@@ -125,7 +126,7 @@ const WorkFlowDetails = () => {
             rowId={rowId}
           />
         </div>
-        {/* Edit Modal */}
+        {/* Edit Modal "Change The Order" */}
         <Modals isOpen={isOpen} onClose={onClose}>
           <h1 className="w-full text-zinc-700 font-bold text-2xl text-center">
             Change The Order
@@ -159,24 +160,10 @@ const WorkFlowDetails = () => {
         </Modals>
         {/* Delete Question */}
         <Modals isOpen={isDeleteQuestionOpen} onClose={onClose}>
-          <h1 className="w-full text-zinc-700 font-bold text-2xl text-center">
-            Delete Question
-          </h1>
-          <div className="flex justify-center items-center gap-x-3  rounded p-5">
-            <h1 className="text-lg">
-              Are you sure you want to delete this question ?
-            </h1>
-          </div>
-          <div className="w-full grid place-items-center">
-            <StyledBtn
-              className={
-                " bg-red-600 text-white rounded px-3 py-1 self-center gap-x-2 text-lg "
-              }
-            >
-              Delete
-              <FaTrash />
-            </StyledBtn>
-          </div>
+          <Delete
+            titelDelete={"Question"}
+            question={"are you sure to delete this Question"}
+          />
         </Modals>
       </div>
     </main>
