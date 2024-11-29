@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const StyledBtn = ({ children, className, onclick, path }) => {
   return path ? (
-    <Link onClick={onClick} className={`flex items-center ${className}`}>
+    <Link href={path} onClick={onclick} className={`flex items-center ${className}`}>
       {children}
     </Link>
   ) : (
