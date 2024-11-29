@@ -3,7 +3,7 @@ const AppError = require("./../utils/appError");
 const Workflow = require("./../models/workflowModel");
 
 const getWorkflows = asyncHandler(async (req, res) => {
-  let workflows = await Workflow.find().lean();
+  let workflows = await Workflow.find().populate("questions").lean();
   workflows = workflows.map((workflow, index) => ({
     ...workflow,
     displayId: index + 1,
@@ -61,9 +61,18 @@ const updateWorkflow = asyncHandler(async (req, res, next) => {
   });
 });
 
+const deleteWorkflows = asyncHandler(async (req, res) => {
+  await Workflow.deleteMany();
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
 module.exports = {
   getWorkflows,
   createWorkflow,
   deleteWorkflow,
   updateWorkflow,
+  deleteWorkflows,
 };
