@@ -14,6 +14,7 @@ const FaqsPageContainer = () => {
       icon: <FaPlus />,
       title: "Add Faqs",
       className: "bg-blue text-white hover:bg-sky-700",
+      path: "/faqs/add",
     },
     {
       icon: <FaTrash />,
@@ -28,13 +29,13 @@ const FaqsPageContainer = () => {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isAddOpen, setIsAddOpen] = useState(false);
+  // const [isAddOpen, setIsAddOpen] = useState(false);
   const [rowId, setRowId] = useState(null);
   const [isDeleteFaqsOpen, setIsDeleteFaqsOpen] = useState(false);
 
   const onSelectRow = (id) => setRowId((prev) => (prev === id ? null : id));
 
-  const onAdd = () => setIsAddOpen(true);
+  // const onAdd = () => setIsAddOpen(true);
 
   const onEdit = () => {
     if (rowId) {
@@ -63,7 +64,6 @@ const FaqsPageContainer = () => {
         options={[{ filter: true, search: true }]}
         btn={btn}
         onEdit={onEdit}
-        onAdd={onAdd}
         onDelete={onDelete}
       />
 
@@ -76,9 +76,9 @@ const FaqsPageContainer = () => {
       />
 
       {/* Modal Add */}
-      <Modals isOpen={isAddOpen} onClose={onClose}>
+      {/* <Modals isOpen={isAddOpen} onClose={onClose}>
         <AddFaqs type="Add" />
-      </Modals>
+      </Modals> */}
 
       {/* Modal Edit */}
       <Modals isOpen={isOpen} onClose={onClose}>

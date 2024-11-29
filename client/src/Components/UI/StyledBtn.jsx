@@ -1,18 +1,23 @@
-
 /**
  * this is a styled button
- * 
+ *
  * ! you can not add class are already exists in default
- * 
+ *
  * className: flex items-center shadow
  */
 
-const StyledBtn = ({ children, className, onClick }) => {
-    return (
-        <button onClick={onClick} className={`flex items-center ${className}`}>
-            {children}
-        </button>
-    )
-}
+import Link from "next/link";
 
-export default StyledBtn
+const StyledBtn = ({ children, className, onclick, path }) => {
+  return path ? (
+    <Link onClick={onClick} className={`flex items-center ${className}`}>
+      {children}
+    </Link>
+  ) : (
+    <button onClick={onclick} className={`flex items-center ${className}`}>
+      {children}
+    </button>
+  );
+};  
+
+export default StyledBtn;
