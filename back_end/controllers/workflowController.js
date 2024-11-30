@@ -107,7 +107,4 @@ module.exports = {
   updateWorkflow,
   deleteWorkflows,
   getOneWorkflow,
-  getChatbotWorkflow,
-  getChatbotAnswer,
-
 };
