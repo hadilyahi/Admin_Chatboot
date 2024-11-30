@@ -8,13 +8,13 @@
 
 import Link from "next/link";
 
-const StyledBtn = ({ children, className, onclick, path }) => {
+const StyledBtn = ({ children, className, onclick, path , type , isDisabled }) => {
   return path ? (
     <Link href={path} onClick={onclick} className={`flex items-center ${className}`}>
       {children}
     </Link>
   ) : (
-    <button onClick={onclick} className={`flex items-center ${className}`}>
+    <button type={type} disabled={isDisabled} onClick={onclick} className={`flex items-center ${className}`}>
       {children}
     </button>
   );

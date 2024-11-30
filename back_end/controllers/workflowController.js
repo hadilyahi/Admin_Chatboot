@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const AppError = require("./../utils/appError");
 const Workflow = require("./../models/workflowModel");
+const Question = require("../models/questionModel");
 
 const getWorkflows = asyncHandler(async (req, res) => {
   let workflows = await Workflow.find().populate("questions").lean();
@@ -83,6 +84,42 @@ const deleteWorkflows = asyncHandler(async (req, res) => {
   });
 });
 
+// CHATBOT
+const getChatbotWorkflow = asyncHandler(async (req, res, next) => {
+  const { workflowName } = req.body;
+
+  if (!workflowName) {
+    return next(new AppError("please specify the workflow name", 400));
+  }
+
+  const workflow = await Workflow.findOne({ name: workflowName }).populate(
+    "questions"
+  );
+
+  res.status(200).json({ status: "success", data: { workflow } });
+});
+
+const getChatbotAnswer = asyncHandler(async (req, res, next) => {
+  const { question } = req.body;
+  if (!question) {
+    return next(
+      new AppError("please specify the question to get the answer", 400)
+    );
+  }
+  const result = await Question.findOne({ name: question });
+
+  if (!result) {
+    return next(
+      new AppError(`No results has found with this question: ${question}`, 400)
+    );
+  }
+
+  res.status(200).json({
+    status: "succcess",
+    data: { result },
+  });
+});
+
 module.exports = {
   getWorkflows,
   createWorkflow,
@@ -90,4 +127,7 @@ module.exports = {
   updateWorkflow,
   deleteWorkflows,
   getOneWorkflow,
+  getChatbotWorkflow,
+  getChatbotAnswer,
+
 };

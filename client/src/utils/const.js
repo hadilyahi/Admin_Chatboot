@@ -1,7 +1,7 @@
 const URL = "http://localhost:3001/api/v1/";
 
-export const FAQS_URL = `${URL}faqs/get-faqs`;
-export const FAQ_URL = `${URL}faqs/get-faq`;
+export const GET_ALL_FAQS_URL = `${URL}faqs/get-faqs`;
+export const GET_FAQ_URL = `${URL}faqs/get-faq`;
 export const CREATE_FAQ_URL = `${URL}faqs/create-faq`;
 export const DELETE_FAQS_URL = `${URL}faqs/delete-faqs`;
 

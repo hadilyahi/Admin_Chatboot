@@ -1,7 +1,8 @@
 import StyledBtn from "../../Components/UI/StyledBtn";
 import { FaTrash } from "react-icons/fa";
 
-const Delete = ({ titelDelete, question }) => {
+const Delete = ({ titelDelete, question , onDelete}) => {
+
   return (
     <>
       <h1 className="w-full text-zinc-700 font-bold text-2xl text-center">
@@ -12,6 +13,7 @@ const Delete = ({ titelDelete, question }) => {
       </div>
       <div className="w-full grid place-items-center">
         <StyledBtn
+        onclick={onDelete}
           className={
             " bg-red-600 text-white rounded px-3 py-1 self-center gap-x-2 text-lg "
           }
