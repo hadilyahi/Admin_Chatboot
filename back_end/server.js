@@ -2,7 +2,6 @@ const app = require("./app");
 const mongoose = require("mongoose");
 
 const DB = process.env.DB_URI;
-
 mongoose
   .connect(DB)
   .then(() => console.log("DB has been connected successfuly"))

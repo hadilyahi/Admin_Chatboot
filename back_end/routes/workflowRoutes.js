@@ -17,9 +17,4 @@ router.delete("/delete-workflow/:id", deleteWorkflow);
 router.delete("/delete-workflows", deleteWorkflows);
 router.patch("/update-workflow/:id", updateWorkflow);
 
-
-// CHATBOT
-
-
 module.exports = router;
-

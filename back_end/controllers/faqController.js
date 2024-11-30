@@ -16,38 +16,22 @@ const getFaqs = asyncHandler(async (req, res) => {
 });
 
 const createFaq = asyncHandler(async (req, res, next) => {
-  let faq = {
-    question: req.body.question,
-    type: req.body.type,
-    isRequired: req.body.isRequired,
-    isActive: req.body.isActive,
-  };
-
-  if (faq.type === "type 1") {
-    if (!req.body.picklist) {
-      return next(new AppError("Please specify the category and picklist!", 400));
-    }
-    faq.picklist = req.body.picklist;
+  const { question, answer } = req.body;
+  if (!question || !answer) {
+    return next(
+      new AppError("please provide the question and its answer", 400)
+    );
   }
 
-  if (faq.type === "type 2") {
-    if (!req.body.answer) {
-      return next(new AppError("Please specify the category and answer!", 400));
-    }
-    faq.answer = req.body.answer;
-  }
-
-  faq.category = req.body.category;
-
-  const newFaq = await Faq.create(faq);
+  const faq = await Faq.create({ question, answer });
 
   res.status(201).json({
     status: "success",
-    data: { newFaq },
+    data: { faq },
   });
 });
 
-const getFaq = asyncHandler(async (req, res, next) => {
+const getFaq = asyncHandler(async (req, res) => {
   const { question } = req.body;
 
   if (!question) {
@@ -66,7 +50,7 @@ const getFaq = asyncHandler(async (req, res, next) => {
   });
 });
 
-const deleteFaqs = asyncHandler(async (req, res) => {
+const deleteFaqs = asyncHandler(async (req, res, next) => {
   await Faq.deleteMany();
   res.status(204).json({
     status: "success",

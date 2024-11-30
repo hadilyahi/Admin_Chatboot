@@ -10,12 +10,12 @@ const workflowSchema = new mongoose.Schema(
       maxlength: [100, "Workflow must be at most 100 characters long."],
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: [true, "category is required"],
     },
     status: {
       type: String,
-      enum: ["Validated", "Queued" , "Scheduled" , "Active" , "InActive"],
+      enum: ["Created", "Running"],
     },
     questions: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Question", default: [] },

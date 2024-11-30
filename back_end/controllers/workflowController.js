@@ -1,8 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const AppError = require("./../utils/appError");
 const Workflow = require("./../models/workflowModel");
-const Question = require("../models/questionModel");
-const Category = require("../models/categoryModel");
 
 const getWorkflows = asyncHandler(async (req, res) => {
   let workflows = await Workflow.find().populate("questions").lean();
@@ -19,7 +17,7 @@ const getWorkflows = asyncHandler(async (req, res) => {
 
 const getOneWorkflow = asyncHandler(async (req, res, next) => {
   const workflowId = req.params.workflowId;
-  const workflow = await Workflow.findById(workflowId).populate("questions");
+  const workflow = await Workflow.findById(workflowId);
 
   if (!workflow) {
     return next(new AppError("error fetching the workflow", 404));
@@ -32,29 +30,14 @@ const getOneWorkflow = asyncHandler(async (req, res, next) => {
 });
 
 const createWorkflow = asyncHandler(async (req, res, next) => {
-  const { name, description, status, categoryName } = req.body;
-
-  if (!name || !description || !status  || !categoryName) {
-    return next(new AppError("please provide all fields required", 400));
-  }
-
-  const categoryDocument = await Category.findOne({ name: categoryName });
-
-  if (!categoryDocument) {
+  const { name, description, status } = req.body;
+  if ((!name || !description, !status)) {
     return next(
-      new AppError(`No category has found with this name: ${categoryName}`)
+      new AppError("please provide name, description and status", 400)
     );
   }
 
-  const category = categoryDocument._id;
-
-  const workflow = await Workflow.create({
-    name,
-    description,
-    status,
-    category,
-    // questions,
-  });
+  const workflow = await Workflow.create({ name, description, status });
 
   res.status(201).json({
     status: "success",
