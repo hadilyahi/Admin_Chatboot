@@ -6,8 +6,6 @@ const {
   updateWorkflow,
   deleteWorkflows,
   getOneWorkflow,
-  getChatbotWorkflow,
-  getChatbotAnswer,
 } = require("./../controllers/workflowController");
 
 const router = express.Router();

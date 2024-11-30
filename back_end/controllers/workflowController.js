@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const AppError = require("./../utils/appError");
 const Workflow = require("./../models/workflowModel");
-const Question = require("../models/questionModel");
 const Category = require("../models/categoryModel");
 
 const getWorkflows = asyncHandler(async (req, res) => {
@@ -32,9 +31,9 @@ const getOneWorkflow = asyncHandler(async (req, res, next) => {
 });
 
 const createWorkflow = asyncHandler(async (req, res, next) => {
-  const { name, description, status, categoryName, questions } = req.body;
+  const { name, description, status, categoryName, faqs } = req.body;
 
-  if (!name || !description || !status || !questions || !categoryName) {
+  if (!name || !description || !status || !categoryName) {
     return next(new AppError("please provide all fields required", 400));
   }
 

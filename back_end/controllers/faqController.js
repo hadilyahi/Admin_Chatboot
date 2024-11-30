@@ -18,22 +18,28 @@ const getFaqs = asyncHandler(async (req, res) => {
 const createFaq = asyncHandler(async (req, res, next) => {
   let faq = {
     question: req.body.question,
-    description: req.body.description,
     type: req.body.type,
     isRequired: req.body.isRequired,
     isActive: req.body.isActive,
   };
-  if (faq.type == "type 1") {
-    faq.category = req.body.category;
-  } else {
-    if (!req.body.category || !req.body.picklist) {
+
+  if (faq.type === "type 1") {
+    if (!req.body.picklist) {
       return next(
-        new AppError("please specify the category and picklist!", 400)
+        new AppError("Please specify the category and picklist!", 400)
       );
     }
     faq.picklist = req.body.picklist;
-    faq.category = req.body.category;
   }
+
+  if (faq.type === "type 2") {
+    if (!req.body.answer) {
+      return next(new AppError("Please specify the category and answer!", 400));
+    }
+    faq.answer = req.body.answer;
+  }
+
+  faq.category = req.body.category;
 
   const newFaq = await Faq.create(faq);
 
