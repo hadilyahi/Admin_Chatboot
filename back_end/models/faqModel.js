@@ -7,9 +7,24 @@ const faqSchema = new mongoose.Schema({
     required: [true, "question is required"],
     unique: true,
   },
-  answer: {
+  description: {
     type: String,
-    required: [true, "answer is required"],
+    required: [true, "description is required"],
+  },
+  type: {
+    type: String,
+    required: [true, "type is required"],
+    enum: ["type 1", "type 2"],
+  },
+  category: String,
+  picklist: Array,
+  isRequired: {
+    type: Boolean,
+    required: true,
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
   },
 });
 
