@@ -71,7 +71,7 @@ const FaqsPageContainer = () => {
   const onClose = () => {
     setIsOpen(false);
     setIsDeleteFaqsOpen(false);
-    setIsAddOpen(false);
+    // setIsAddOpen(false);
   };
 
   const onDeleteFaqs = () => {

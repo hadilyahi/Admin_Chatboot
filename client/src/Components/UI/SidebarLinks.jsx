@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const sidebarLinks = [
     { ImgSrc: "/dashbord.svg", name: "Dashboard", href: "/" },
+    { ImgSrc: "/dashbord.svg", name: "Categories", href: "/categories" },
     { ImgSrc: "/dashbord.svg", name: "Workflows", href: "/workflows" },
     { ImgSrc: "/faQ.svg", name: "FAQs", href: "/faqs" },
     { ImgSrc: "/Reports.svg", name: "Reports", href: "/reports" },

@@ -7,7 +7,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoEyeOutline } from "react-icons/io5";
 import StyledBtn from "../../Components/UI/StyledBtn";
 
-const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId , onEdit , onDelete }) => {
+const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId , onEdit , onDelete , path }) => {
   const [activeRowId, setActiveRowId] = useState(null);
 
   const toggleMenu = (id) => {
@@ -82,7 +82,7 @@ const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId , onEdit , onDel
               {!isReadOnly && (
                 <td className="p-3 relative">
                   <StyledBtn
-                    onClick={(e) => {
+                    onclick={(e) => {
                       e.stopPropagation();
                       toggleMenu(row.id);
                     }}
@@ -93,7 +93,7 @@ const TableRow = ({ data2, columns, isReadOnly, getRowId, rowId , onEdit , onDel
                       <div className="absolute top-4 right-1 bg-white z-10 rounded border border-gray shadow p-2">
                         <div className="flex flex-col gap-y-2">
                           <Link
-                            href={`/workflows/${row.id}`}
+                            href={`${path}/${row.id}`}
                             className="text-2xl text-blue"
                           >
                             <IoEyeOutline />

@@ -11,7 +11,8 @@ import Delete from "../Delete/Delete";
 const WorkFlowPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isDeleteOpen , setIsDeleteOpen] = useState(false)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isAddCatrgotyOpen, setIsAddCatrgotyOpen] = useState(false);
   const [data, setData] = useState([]);
 
   const columns = [
@@ -28,6 +29,7 @@ const WorkFlowPage = () => {
     setIsOpen(false);
     setIsEditOpen(false);
     setIsDeleteOpen(false);
+    setIsAddCatrgotyOpen(false);
   };
 
   const onEditeWorkflow = (id) => {
@@ -82,6 +84,7 @@ const WorkFlowPage = () => {
         options={[{ filter: true, search: true }]}
         btn={btn}
         onAddWorkflow={() => setIsOpen(true)}
+        
       />
 
       <TableRow
@@ -89,26 +92,30 @@ const WorkFlowPage = () => {
         data2={data}
         onEdit={onEditeWorkflow}
         onDelete={onDeleteWorkflow}
+        path={"/workflows"}
+        
       />
-      {/* add */}
+      {/* add workflow */}
       <Modals isOpen={isOpen} onClose={onClose}>
         <AddWorkFlow type="Add" />
       </Modals>
 
-      {/* update */}
+      {/* update workflow */}
       <Modals isOpen={isEditOpen} onClose={onClose}>
         <AddWorkFlow type="Update" />
-      </Modals> 
+      </Modals>
 
-      {/* delete */}
-      <Modals 
-      isOpen={isDeleteOpen}
-      onClose={onClose}
-      >
+      {/* delete workflow */}
+      <Modals isOpen={isDeleteOpen} onClose={onClose}>
         <Delete
-        titelDelete={"workflow"}
-        question={"Are you sure to delete this workflow ?"}
+          titelDelete={"workflow"}
+          question={"Are you sure to delete this workflow ?"}
         />
+      </Modals>
+
+      {/* add category */}
+      <Modals isOpen={isAddCatrgotyOpen} onClose={onClose}>
+        <AddWorkFlow type="Add" />
       </Modals>
     </main>
   );

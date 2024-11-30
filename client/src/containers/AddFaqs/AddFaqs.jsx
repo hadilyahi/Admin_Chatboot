@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Inputs } from "../../Components";
-import StyledBtn from "../../Components/UI/StyledBtn";
-import { BsMotherboardFill } from "react-icons/bs";
-import { FaTrash } from "react-icons/fa";
+import React, { useState } from "react";
+import { BsPlusCircle } from "react-icons/bs";
+import { FaTrash, FaExclamationCircle } from "react-icons/fa";
 import { useFormik } from "formik";
-import * as Yup from "yup"; // Import Yup for validation
+import * as Yup from "yup";
 import { createFaqs } from "../../utils/api/faqs";
-import { showErrorAlert, showSuccessAlert }  from "../../utils/alert";
+import { showErrorAlert, showSuccessAlert } from "../../utils/alert";
 
 const AddFaqs = ({ type, data }) => {
   const [types, setTypes] = useState("");
@@ -18,221 +16,209 @@ const AddFaqs = ({ type, data }) => {
   const categories = ["Category 1", "Category 2", "Category 3"];
   const questionTypes = ["type 1", "type 2"];
 
-  // Add Answer Logic (Updated to use callback in setState)
   const addValueType1 = () => {
     if (answerInput.trim()) {
       const updatedAnswers = [...answerAsArray, answerInput];
       setAnswerAsArray(updatedAnswers);
-      formik.setFieldValue("picklist", updatedAnswers);  // Update Formik's picklist
-      setAnswerInput(""); // Clear input after adding
+      formik.setFieldValue("picklist", updatedAnswers);
+      setAnswerInput("");
     } else {
-      alert("Please enter an answer before adding.");
+      showErrorAlert("Please enter an answer before adding.");
     }
   };
 
   const handleType = (e) => {
     setTypes(e.target.value);
     if (e.target.value === "type 2") {
-      setAnswerAsArray([]); // Clear answers if question type changes to type 2
-      formik.setFieldValue("picklist", []); // Also clear picklist in Formik
+      setAnswerAsArray([]);
+      formik.setFieldValue("picklist", []);
     }
   };
 
   const removeAnswer = (index) => {
     const updatedAnswers = answerAsArray.filter((_, idx) => idx !== index);
     setAnswerAsArray(updatedAnswers);
-    formik.setFieldValue("picklist", updatedAnswers);  // Update Formik's picklist
+    formik.setFieldValue("picklist", updatedAnswers);
   };
 
-  const clearAllAnswers = () => {
-    setAnswerAsArray([]);
-    formik.setFieldValue("picklist", []);  // Clear picklist in Formik
-  };
+  // const clearAllAnswers = () => {
+  //   setAnswerAsArray([]);
+  //   formik.setFieldValue("picklist", []);
+  // };
 
   const faqsFormValidationSchema = Yup.object().shape({
     question: Yup.string().required("Question is required"),
     category: Yup.string().required("Category is required"),
     type: Yup.string().required("Type is required"),
-    // picklist: types === "type 1" ? Yup.array().required("Picklist is required") : Yup.array().notRequired(),
-    description: types === "type 2" && Yup.string().required("Description is required") //: Yup.string().notRequired(),
+    description:
+      types === "type 2" && Yup.string().required("Description is required"),
   });
-  
 
   const formik = useFormik({
     initialValues: {
       question: "",
       category: "",
       type: questionTypes.length > 0 ? questionTypes[0] : "",
-      picklist: answerAsArray, 
+      picklist: answerAsArray,
       isRequired: false,
       isActive: false,
       description: "",
     },
     validationSchema: faqsFormValidationSchema,
     onSubmit: (values) => {
-      if (type === "Update") {
-        // Update logic (if applicable)
-      } else if (type === "Add") {
-        if (types === "type 2") {
-          createFaqs(values)
-            .then((res) => {
-              showSuccessAlert("FAQs added successfully");
-              window.location.reload();
-            })
-            .catch((err) => {
-              console.log(err);
-              showErrorAlert("Something went wrong");
-            });
-        } else if (types === "type 1") {
-          if (answerAsArray.length === 0) {
-            showErrorAlert("Please add at least one answer");
-          } else {
-            createFaqs(values)
-              .then((res) => {
-                showSuccessAlert("FAQs added successfully");
-                window.location.reload();                
-              })
-              .catch((err) => {
-                console.log(err);
-                showErrorAlert("Something went wrong");
-              });
-          }
+      if (type === "Add") {
+        if (types === "type 1" && answerAsArray.length === 0) {
+          showErrorAlert("Please add at least one answer.");
+          return;
         }
+        createFaqs(values)
+          .then(() => {
+            showSuccessAlert("FAQs added successfully");
+            window.location.reload();
+          })
+          .catch(() => {
+            showErrorAlert("Something went wrong");
+          });
       }
     },
-    
   });
 
-  useEffect(() => {
-    if (type === "Update") {
-      // Update logic based on "data" if necessary
-    }
-  }, [type, data]);
-
-  console.log("Formik Values:", formik.values);
-  console.log("answerAsArray:", answerAsArray);
-
   return (
-    <form onSubmit={formik.handleSubmit} className="md:mx-auto my-10">
-      <h1 className="text-center text-zinc-700 text-2xl font-bold">
+    <div className="max-w-4xl mx-auto bg-white rounded-lg p-8 my-10">
+      <h1 className="text-center text-gray-700 text-2xl font-bold mb-6">
         {type === "Add" ? "Add" : "Update"} FAQs
       </h1>
-
-      <Inputs
-        type="text"
-        placeholder="Question"
-        position="my-3"
-        onchange={formik.handleChange}
-        value={formik.values.question}
-        className="p-3 border border-gray rounded"
-        id="question"
-      />
-      {formik.errors.question && formik.touched.question && (
-        <p className="text-red-500 text-sm">{formik.errors.question}</p>
-      )}
-      <div className="grid grid-cols-2 gap-x-3">
-        <select
-          id="category"
-          className="w-full p-3 border border-zinc-200 rounded my-3"
-          value={formik.values.category}
-          onChange={formik.handleChange}
-        >
-          <option value="">Select Category</option>
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-        {formik.errors.category && formik.touched.category && (
-          <p className="text-red-500 text-sm">{formik.errors.category}</p>
-        )}
-        <select
-          id="type"
-          className="w-full p-3 border border-zinc-200 rounded my-3"
-          value={types}
-          onChange={handleType}
-        >
-          <option value="">Select Question Type</option>
-          {questionTypes.map((type, index) => (
-            <option key={index} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-        {formik.errors.type && formik.touched.type && (
-          <p className="text-red-500 text-sm">{formik.errors.type}</p>
-        )}
-      </div>
-
-      {types === "type 1" ? (
-        <>
-          <div className="grid grid-cols-3 gap-x-3 items-center">
-            <Inputs
-              type="text"
-              placeholder="Answer"
-              position="my-3"
-              className="p-3 border-b border-zinc-200 rounded"
-              id="answer"
-              value={answerInput}
-              onchange={(e) => setAnswerInput(e.target.value)}
-            />
-            <button
-              type="button"
-              className="bg-blue text-white rounded px-3 mx-5 md:mx-10 py-1 flex items-center justify-center duration-300 hover:bg-cyan-900 hover:shadow-xl text-lg"
-              onClick={addValueType1}
-            >
-              <BsMotherboardFill className="mr-1" />
-              Add
-            </button>
-            <button
-              type="button"
-              className="bg-red-500 text-white rounded px-3 py-2 duration-300 hover:bg-red-700"
-              onClick={clearAllAnswers}
-            >
-              Clear All Answers
-            </button>
-          </div>
-          <div className="grid grid-cols-4 gap-x-2">
-            {answerAsArray.map((item, idx) => (
-              <div
-                key={idx}
-                className="col-span-2 flex justify-between items-center my-2 border p-2 rounded "
-              >
-                <p className="text-left text-zinc-600">{item}</p>
-                <StyledBtn
-                  onclick={() => removeAnswer(idx)}
-                  className="bg-red-500 text-white rounded px-3 py-2 duration-300 hover:bg-red-700"
-                >
-                  <FaTrash />
-                </StyledBtn>
-              </div>
-            ))}
-          </div>
-        </>
-      ) : types === "type 2" ? (
-        <>
-        <textarea
-          id="description"
-          cols="10"
-          rows="10"
-          placeholder="Description"
-          className="w-full p-3 border border-zinc-200 rounded my-3"
-        ></textarea>
-        {formik.errors.description && formik.touched.description && (
-          <p className="text-red-500 text-sm">{formik.errors.description}</p>
-        )}
-        </>
-      ) : (
-        <div className="my-3 mx-5">
-          <h1 className="text-red-500 text-2xl">you should select a question type to continue ...</h1>
+      <form onSubmit={formik.handleSubmit} className="space-y-6">
+        {/* Question Input */}
+        <div>
+          <label htmlFor="question" className="block text-gray-600 mb-1">
+            Question
+          </label>
+          <input
+            type="text"
+            id="question"
+            placeholder="Enter your question"
+            className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+            onChange={formik.handleChange}
+            value={formik.values.question}
+          />
+          {formik.errors.question && formik.touched.question && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <FaExclamationCircle className="mr-2" />
+              {formik.errors.question}
+            </p>
+          )}
         </div>
+
+        {/* Category and Type Select */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="category" className="block text-gray-600 mb-1">
+              Category
+            </label>
+            <select
+              id="category"
+              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              onChange={formik.handleChange}
+              value={formik.values.category}
+            >
+              <option value="">Select Category</option>
+              {categories.map((category, idx) => (
+                <option key={idx} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="type" className="block text-gray-600 mb-1">
+              Question Type
+            </label>
+            <select
+              id="type"
+              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              value={types}
+              onChange={handleType}
+            >
+              <option value="">Select Question Type</option>
+              {questionTypes.map((type, idx) => (
+                <option key={idx} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Conditional Inputs Based on Type */}
+        {types === "type 1" && (
+          <div>
+            <label className="block text-gray-600 mb-1">Answers</label>
+            <div className="flex items-center space-x-4">
+              <input
+                type="text"
+                placeholder="Add an answer"
+                className="flex-1 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                value={answerInput}
+                onChange={(e) => setAnswerInput(e.target.value)}
+              />
+              <button
+                type="button"
+                className="flex items-center bg-blue text-white px-4 py-2 rounded hover:bg-blue-700"
+                onClick={addValueType1}
+              >
+                <BsPlusCircle className="mr-2" />
+                Add
+              </button>
+            </div>
+            <div className="mt-4">
+              {answerAsArray.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex justify-between items-center bg-gray p-3 rounded mb-2"
+                >
+                  <p className="text-gray-700">{item}</p>
+                  <button
+                    type="button"
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => removeAnswer(idx)}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
-      <StyledBtn type={"submit"} isDisabled={!types ? true: false}  className={`${!types ? "bg-gray text-black cursor-not-allowed": "bg-blue text-white hover:bg-cyan-900 hover:shadow-xl"} rounded px-5 mx-2 md:mx-10 py-1 w-fit flex justify-center duration-300  text-lg`}>
-        {type === "Add" ? "Validate" : "Update"}
-      </StyledBtn>
-    </form>
+        {types === "type 2" && (
+          <div>
+            <label htmlFor="description" className="block text-gray-600 mb-1">
+              Description
+            </label>
+            <textarea
+              id="description"
+              placeholder="Enter description"
+              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              onChange={formik.handleChange}
+              value={formik.values.description}
+            ></textarea>
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={!types}
+          className={`${
+            !types
+              ? "bg-gray text-zinc-500 cursor-not-allowed"
+              : "bg-blue text-white hover:bg-blue-700"
+          } w-full py-3 rounded text-lg font-semibold`}
+        >
+          {type === "Add" ? "Add FAQ" : "Update FAQ"}
+        </button>
+      </form>
+    </div>
   );
 };
 
