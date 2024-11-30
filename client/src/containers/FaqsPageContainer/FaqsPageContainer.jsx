@@ -10,6 +10,7 @@ import Delete from "../Delete/Delete";
 import AddFaqs from "../AddFaqs/AddFaqs";
 import { getFaqs } from "../../utils/api/faqs";
 const FaqsPageContainer = () => {
+  
   const btn = [
     {
       icon: <FaPlus />,

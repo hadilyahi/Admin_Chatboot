@@ -49,7 +49,7 @@ const TableRow = ({
   };
 
   return (
-    <div className="overflow-y-auto h-screen">
+    <div className="overflow-y-scroll h-fit">
       <table className="min-w-full bg-white border border-zinc-200 rounded-lg">
         <thead className="bg-gray border-b border-zinc-200">
           <tr>
@@ -122,7 +122,7 @@ const TableRow = ({
                         <div className="absolute top-4 right-1 bg-white z-10 rounded border border-gray shadow p-2">
                           <div className="flex flex-col gap-y-2">
                             <Link
-                              href={`${path}/${row.id}`}
+                              href={`${path}/${row.name.split(" ").join("-")}`}
                               className="text-2xl text-blue"
                             >
                               <IoEyeOutline />
@@ -135,14 +135,9 @@ const TableRow = ({
                             </button>
                             <button
                               onClick={() => handleDelete(row.id)}
-                              className={`text-2xl ${
-                                loadingRowId === row.id
-                                  ? "text-gray cursor-not-allowed"
-                                  : "text-red-500"
-                              }`}
-                              disabled={loadingRowId === row.id}
+                              className={`text-2xl text-red-500`}
                             >
-                              {loadingRowId === row.id ? "..." : <CiTrash />}
+                              <CiTrash />
                             </button>
                           </div>
                         </div>

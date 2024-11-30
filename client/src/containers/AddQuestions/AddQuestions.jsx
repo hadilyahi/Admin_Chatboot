@@ -1,34 +1,51 @@
 "use client";
 
-import { useState } from 'react';
-import { FaSave } from 'react-icons/fa';
-import { Inputs, TableRow } from '../../Components';
-import StyledBtn from '../../Components/UI/StyledBtn';
-import { columnsSearchQuestion, dataSeachQuestion } from '../../utils/staticData';
+import { useEffect, useState } from "react";
+import { FaSave } from "react-icons/fa";
+import { Inputs, TableRow } from "../../Components";
+import StyledBtn from "../../Components/UI/StyledBtn";
+import { getFaqs } from "../../utils/api/faqs";
 
 const AddQuestions = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredData, setFilteredData] = useState(dataSeachQuestion);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [data, setData] = useState([]);
+  const columns = [
+    { key: "displayId", label: "#" },
+    { key: "question", label: "question" },
+  ];
+  
+  useEffect(() => {
+    getFaqs().then((data) => {
+      console.log(data);
+      const res = data.data.faqWithSequentialIds;
+       const formattingData = res.map((item, index) => ({
+        displayId: item.displayId,
+        id: item._id,
+        question: item.question,
+       }))
+      setData(formattingData);
+    });
+  }, []);
 
-  const filterData = (query) => {
-    const lowerCaseQuery = query.toLowerCase();
-    const filtered = dataSeachQuestion.filter((item) =>
+  
+  useEffect(() => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const filtered = data.filter((item) =>
       Object.values(item).some((value) =>
         String(value).toLowerCase().includes(lowerCaseQuery)
       )
     );
     setFilteredData(filtered);
-  };
+  }, [searchQuery, data]);
 
-
+  
   const handleSearchChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    filterData(query);
+    setSearchQuery(e.target.value);
   };
 
   return (
-    <section className="w-[600px] min-h-[700px] max-h-[700px] my-5">
+    <section className="w-[600px] min-h-[700px] max-h-[700px] overflow-y-hidden my-5">
       <div className="flex justify-between mb-3">
         <Inputs
           className="border border-indigo-700 rounded h-10 px-2"
@@ -41,11 +58,7 @@ const AddQuestions = () => {
           Add <FaSave />
         </StyledBtn>
       </div>
-      <TableRow
-        columns={columnsSearchQuestion}
-        data2={filteredData}
-        isReadOnly={true}
-      />
+      <TableRow columns={columns} data2={filteredData} isReadOnly={true} />
     </section>
   );
 };

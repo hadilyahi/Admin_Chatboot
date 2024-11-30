@@ -1,4 +1,4 @@
-const URL = "http://localhost:3008/api/v1/";
+const URL = "http://localhost:3001/api/v1/";
 
 export const GET_ALL_FAQS_URL = `${URL}faqs/get-faqs`;
 export const GET_FAQ_URL = `${URL}faqs/get-faq`;
