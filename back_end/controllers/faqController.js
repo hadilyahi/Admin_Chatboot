@@ -16,18 +16,36 @@ const getFaqs = asyncHandler(async (req, res) => {
 });
 
 const createFaq = asyncHandler(async (req, res, next) => {
-  const { question, answer } = req.body;
-  if (!question || !answer) {
-    return next(
-      new AppError("please provide the question and its answer", 400)
-    );
+  let faq = {
+    question: req.body.question,
+    type: req.body.type,
+    isRequired: req.body.isRequired,
+    isActive: req.body.isActive,
+  };
+
+  if (faq.type === "type 1") {
+    if (!req.body.picklist) {
+      return next(
+        new AppError("Please specify the category and picklist!", 400)
+      );
+    }
+    faq.picklist = req.body.picklist;
   }
 
-  const faq = await Faq.create({ question, answer });
+  if (faq.type === "type 2") {
+    if (!req.body.answer) {
+      return next(new AppError("Please specify the category and answer!", 400));
+    }
+    faq.answer = req.body.answer;
+  }
+
+  faq.category = req.body.category;
+
+  const newFaq = await Faq.create(faq);
 
   res.status(201).json({
     status: "success",
-    data: { faq },
+    data: { newFaq },
   });
 });
 
