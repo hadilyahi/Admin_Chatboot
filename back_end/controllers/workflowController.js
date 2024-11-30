@@ -107,10 +107,7 @@ module.exports = {
   updateWorkflow,
   deleteWorkflows,
   getOneWorkflow,
-<<<<<<< HEAD
   getChatbotWorkflow,
   getChatbotAnswer,
 
-=======
->>>>>>> back_end
 };
