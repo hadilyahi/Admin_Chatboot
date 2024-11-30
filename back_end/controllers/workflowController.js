@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const AppError = require("./../utils/appError");
 const Workflow = require("./../models/workflowModel");
 const Question = require("../models/questionModel");
+const Category = require("../models/categoryModel");
 
 const getWorkflows = asyncHandler(async (req, res) => {
   let workflows = await Workflow.find().populate("questions").lean();
@@ -31,14 +32,29 @@ const getOneWorkflow = asyncHandler(async (req, res, next) => {
 });
 
 const createWorkflow = asyncHandler(async (req, res, next) => {
-  const { name, description, status } = req.body;
-  if ((!name || !description, !status)) {
+  const { name, description, status, categoryName, questions } = req.body;
+
+  if (!name || !description || !status || !questions || !categoryName) {
+    return next(new AppError("please provide all fields required", 400));
+  }
+
+  const categoryDocument = await Category.findOne({ name: categoryName });
+
+  if (!categoryDocument) {
     return next(
-      new AppError("please provide name, description and status", 400)
+      new AppError(`No category has found with this name: ${categoryName}`)
     );
   }
 
-  const workflow = await Workflow.create({ name, description, status });
+  const category = categoryDocument._id;
+
+  const workflow = await Workflow.create({
+    name,
+    description,
+    status,
+    category,
+    questions,
+  });
 
   res.status(201).json({
     status: "success",
@@ -84,42 +100,6 @@ const deleteWorkflows = asyncHandler(async (req, res) => {
   });
 });
 
-// CHATBOT
-const getChatbotWorkflow = asyncHandler(async (req, res, next) => {
-  const { workflowName } = req.body;
-
-  if (!workflowName) {
-    return next(new AppError("please specify the workflow name", 400));
-  }
-
-  const workflow = await Workflow.findOne({ name: workflowName }).populate(
-    "questions"
-  );
-
-  res.status(200).json({ status: "success", data: { workflow } });
-});
-
-const getChatbotAnswer = asyncHandler(async (req, res, next) => {
-  const { question } = req.body;
-  if (!question) {
-    return next(
-      new AppError("please specify the question to get the answer", 400)
-    );
-  }
-  const result = await Question.findOne({ name: question });
-
-  if (!result) {
-    return next(
-      new AppError(`No results has found with this question: ${question}`, 400)
-    );
-  }
-
-  res.status(200).json({
-    status: "succcess",
-    data: { result },
-  });
-});
-
 module.exports = {
   getWorkflows,
   createWorkflow,
@@ -127,7 +107,10 @@ module.exports = {
   updateWorkflow,
   deleteWorkflows,
   getOneWorkflow,
+<<<<<<< HEAD
   getChatbotWorkflow,
   getChatbotAnswer,
 
+=======
+>>>>>>> back_end
 };

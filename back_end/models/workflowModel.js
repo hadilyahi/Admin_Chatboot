@@ -10,7 +10,7 @@ const workflowSchema = new mongoose.Schema(
       maxlength: [100, "Workflow must be at most 100 characters long."],
     },
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, "category is required"],
     },
     status: {
