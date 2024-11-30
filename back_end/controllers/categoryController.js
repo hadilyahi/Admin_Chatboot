@@ -26,4 +26,20 @@ const getAllCategories = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { createCategory, getAllCategories };
+const deleteCategory = asyncHandler(async (req, res, next) => {
+  const { name } = req.body;
+  const category = await Category.findOne({ name });
+
+  if (!category) {
+    return next(new AppError(`No category has found with name: ${name}`));
+  }
+
+  await Category.findByIdAndDelete(category._id);
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
+module.exports = { createCategory, getAllCategories, deleteCategory };
