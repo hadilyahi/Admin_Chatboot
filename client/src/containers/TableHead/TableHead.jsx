@@ -12,7 +12,7 @@ const TableHead = ({
   onAddWorkflow,
 }) => {
   return (
-    <div className="flex flex-col gap-y-6 p-3 bg-gray sticky top-[50px] z-10 border-b border-zinc-200">
+    <div className="flex flex-col gap-y-6 p-3 bg-gray sticky top-[94px] z-10 border-b border-zinc-200">
       <div className="flex flex-row justify-between items-stretch overflow-y-hidden  w-full">
         <div className="flex items-stretch gap-2 h-10 w-1/2">
           {options?.map((item, idx) => (
