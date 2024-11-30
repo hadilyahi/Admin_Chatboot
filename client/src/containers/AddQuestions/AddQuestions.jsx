@@ -20,6 +20,7 @@ const AddQuestions = () => {
     setFilteredData(filtered);
   };
 
+
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);

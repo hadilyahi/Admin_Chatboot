@@ -72,8 +72,6 @@ const WorkFlowPage = () => {
           workflowId: workflow.id,
         }));
         setData(formattingData);
-        console.log(data);
-        console.log("formattiingData : ", formattingData);
       })
       .catch((error) => console.log(error));
   }, []);

@@ -28,13 +28,15 @@ const TableRow = ({
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Open":
+      case "Validated":
         return "bg-yellow text-white";
-      case "Paid":
+      case "Queued":
         return "bg-green text-white";
-      case "Inactive":
+      case "Scheduled":
         return "bg-gray text-black";
-      case "Due":
+      case "Active":
+        return "bg-green text-white";
+      case "InActive":
         return "bg-red-600 text-white";
       default:
         return "";

@@ -1,4 +1,4 @@
-import { GET_ONE_WORKFLOW_URL, WORKFLOWS_URL } from "../const";
+import { GET_ONE_WORKFLOW_URL, WORKFLOWS_URL , CREATE_WORKFLOW_URL } from "../const";
 
 export const getWorkflows = async () => {
     try {
@@ -29,3 +29,19 @@ export const getQuestuonByWorkflowId = async (workflowId) => {
         console.error(error);
     }
 };
+
+export const createWorkflow = async (data) =>{
+    try{
+        const response = await fetch(CREATE_WORKFLOW_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const data2 = await response.json();
+        return data2;
+    }catch(error){
+        console.error(error);
+    }
+}

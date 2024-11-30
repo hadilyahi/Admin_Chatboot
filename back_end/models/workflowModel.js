@@ -15,7 +15,7 @@ const workflowSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Created", "Running"],
+      enum: ["Validated", "Queued" , "Scheduled" , "Active" , "InActive"],
     },
     questions: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Question", default: [] },
