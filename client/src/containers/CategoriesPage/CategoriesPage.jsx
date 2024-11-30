@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState, useEffect } from "react";
 import TableHead from "../TableHead/TableHead";
 import { FaPlus, FaTrash } from "react-icons/fa";
@@ -15,45 +16,47 @@ const CategoriesPage = () => {
   const [isEditCatrgotyOpen, setIsEditCatrgotyOpen] = useState(false);
   const [isDeleteCategyOpen, setIsDeleteCategyOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
-  console.log(categoryName);
+  const [rowId, setRowId] = useState(null);
   const [data, setData] = useState([]);
+
+  const onSelectRow = (id) => setRowId((prev) => (prev === id ? null : id));
   const columns = [
     { key: "id", label: "#" },
     { key: "name", label: "Name" },
   ];
-  const onEdit = (id) => {
-    if (id) {
+
+  const onEdit = () => {
+    if (rowId) {
       setIsEditCatrgotyOpen(true);
     } else {
-      showErrorAlert("id not found");
+      showErrorAlert("Please select a category to edit.");
     }
   };
 
-  const onDelete = (id) => {
-    if (id) {
-      setIsDeleteCategyOpen(true);
-    } else {
-      showErrorAlert("id not found");
-    }
-  };
+  const onDelete = () => setIsDeleteCategyOpen(true);
 
   const onClose = () => {
     setIsAddCatrgotyOpen(false);
     setIsEditCatrgotyOpen(false);
     setIsDeleteCategyOpen(false);
   };
+
   const btn = [
     {
       icon: <FaPlus />,
       title: "Add Category",
-      className: "bg-cyan-800 text-white hover:bg-sky-700",
+      className: "bg-cyan-600 text-white hover:bg-cyan-800 rounded-md px-4 py-2 flex items-center gap-x-2",
+    },
+    {
+      icon: <FaTrash />,
+      title: "Delete",
+      className: "bg-red-500 text-white hover:bg-red-700 rounded-md px-4 py-2 flex items-center gap-x-2",
     },
   ];
 
-  // fetch all categories
+  // Fetch all categories
   useEffect(() => {
     getCategories().then((data) => {
-      console.log("data :", data);
       const res = data.data.categories;
       const formattingData = res.map((item) => ({
         id: item._id,
@@ -63,13 +66,11 @@ const CategoriesPage = () => {
     });
   }, []);
 
-  
-
-  // delete category
+  // Delete category
   const onDeleteCategory = () => {
-    deleteCategories({name:categoryName})
+    deleteCategories({ name: categoryName })
       .then(() => {
-        showSuccessAlert("category deleted successfully");
+        showSuccessAlert("Category deleted successfully");
       })
       .catch((error) => {
         showErrorAlert(error.message);
@@ -77,56 +78,57 @@ const CategoriesPage = () => {
   };
 
   return (
-    <main className="w-full h-full">
-      <TableHead
-        options={[{ filter: true, search: true }]}
-        btn={btn}
-        onAddCategory={() => setIsAddCatrgotyOpen(true)}
-      />
-
-      <TableRow
-        columns={columns}
-        data2={data}
-        path="/categories"
-        onEdit={onEdit}
-        onDelete={onDelete}
-      />
-
-      {/* add Category */}
-      <Modals isOpen={isAddCatrgotyOpen} onClose={onClose}>
-        <CategoryForm type="Add" />
-      </Modals>
-
-      {/* edit category */}
-      <Modals isOpen={isEditCatrgotyOpen} onClose={onClose}>
-        <CategoryForm type="Update" />
-      </Modals>
-
-      {/* delete category */}
-      <Modals isOpen={isDeleteCategyOpen} onClose={onClose}>
-        <h1 className="w-full text-zinc-700 font-bold text-2xl text-center">
-          Delete Category
-        </h1>
-        <div className="flex justify-center items-center gap-x-3  rounded p-5">
-          <h1 className="text-lg">Are you sure?</h1>
-        </div>
-        <Inputs
-          type="text"
-          placeholder={"asdasdasd"}
-          onchange={e => setCategoryName(e.target.value)}
+    <main className="w-full h-full md:p-6 bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        <TableHead
+          options={[{ filter: true, search: true }]}
+          btn={btn}
+          onAddCategory={() => setIsAddCatrgotyOpen(true)}
+          onDelete={onDelete}
         />
-        <div className="w-full grid place-items-center">
-          <StyledBtn
-            onclick={onDeleteCategory}
-            className={
-              " bg-red-600 text-white rounded px-3 py-1 self-center gap-x-2 text-lg "
-            }
-          >
-            Delete
-            <FaTrash />
-          </StyledBtn>
-        </div>
-      </Modals>
+
+        <TableRow
+          columns={columns}
+          data2={data}
+          path="/categories"
+          onEdit={onEdit}
+          rowId={rowId}
+          getRowId={onSelectRow}
+        />
+
+        {/* Add Category */}
+        <Modals isOpen={isAddCatrgotyOpen} onClose={onClose}>
+          <CategoryForm type="Add" />
+        </Modals>
+
+        {/* Edit Category */}
+        <Modals isOpen={isEditCatrgotyOpen} onClose={onClose}>
+          <CategoryForm type="Update" />
+        </Modals>
+
+        {/* Delete Category */}
+        <Modals isOpen={isDeleteCategyOpen} onClose={onClose}>
+          <div className="p-6 space-y-4">
+            <h1 className="text-2xl font-bold text-gray-800 text-center">Delete Category</h1>
+            <p className="text-lg text-center">Are you sure you want to delete this category?</p>
+            <Inputs
+              type="text"
+              placeholder="Enter category name"
+              onchange={(e) => setCategoryName(e.target.value)}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+            <div className="w-full flex justify-center">
+              <StyledBtn
+                onclick={onDeleteCategory}
+                className="bg-red-600 hover:bg-red-800 text-white rounded-md px-6 py-2 flex items-center gap-x-2"
+              >
+                Delete
+                <FaTrash />
+              </StyledBtn>
+            </div>
+          </div>
+        </Modals>
+      </div>
     </main>
   );
 };

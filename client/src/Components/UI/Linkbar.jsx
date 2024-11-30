@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Linkbar = () => {
   const linkSigments = usePathname().split("/");
@@ -13,7 +14,12 @@ const Linkbar = () => {
           href={"/"}
           className="flex items-cener gap-2 text-xl text-zinc-800"
         >
-          <span>/</span><p className="hover:underline">dashboard</p>
+          <Image
+            src="/algeriePostLogo.svg"
+            alt="logo"
+            width={40}
+            height={40}
+          />
         </Link>
         {linkSigments.map((segment, index) =>
           segment === "/" ? (

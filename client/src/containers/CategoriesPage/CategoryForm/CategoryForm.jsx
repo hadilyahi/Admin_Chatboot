@@ -1,48 +1,70 @@
-import {useState} from "react";
+import { useState } from "react";
 import { Inputs } from "../../../Components";
 import StyledBtn from "../../../Components/UI/StyledBtn";
 import { createCategory } from "../../../utils/api/categories";
 import { showErrorAlert, showSuccessAlert } from "../../../utils/alert";
 
-const CategoryForm = ({type}) => {
-  const [categoryName , setCategoryName] = useState('')
-  // create category
-  const createCat = () => {
+const CategoryForm = ({ type }) => {
+  const [categoryName, setCategoryName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Handle form submission
+  const handleSubmit = () => {
+    if (!categoryName.trim()) {
+      showErrorAlert("Category name cannot be empty!");
+      return;
+    }
+    setIsLoading(true);
     createCategory({ name: categoryName })
-      .then((data) => {
-        showSuccessAlert("category created successfully");
-        window.location.reload();
+      .then(() => {
+        showSuccessAlert("Category created successfully");
+        window.location.reload(); // Refresh page after successful submission
       })
       .catch((error) => {
         showErrorAlert(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }
-  return (
-    <>
-      <h1 className="text-3xl w-full text-center">{type === "Add" ? "Add" : "Update"} Category</h1>
+  };
 
-      <div className="w-full grid place-items-center my-5">
+  return (
+    <div className="p-6 mx-auto">
+      <h1 className="text-2xl font-semibold text-center text-gray-800">
+        {type === "Add" ? "Add" : "Update"} Category
+      </h1>
+
+      <div className="mt-4">
         <label
           htmlFor="name"
-          className="block mb-1 text-sm font-medium text-gray-700"
+          className="block mb-2 text-sm font-medium text-gray-700"
         >
           Category Name
         </label>
         <Inputs
           type="text"
-          placeholder="Category name"
-          className="rounded border border-gray px-2 h-10 w-full"
-          onchange={e => setCategoryName(e.target.value)}
+          placeholder="Enter category name"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onchange={(e) => setCategoryName(e.target.value)}
+          aria-label="Category Name"
         />
+      </div>
+
+      <div className="mt-6">
         <StyledBtn
-          type="submit"
-          onclick={type === "Add" ? createCat : ''}
-          className="mt-4 w-full justify-center bg-blue text-white py-2 rounded hover:bg-blue-600 transition duration-300"
+          type="button"
+          onclick={handleSubmit}
+          className={`w-full py-2 px-4 rounded-md text-white ${
+            isLoading
+              ? "bg-gray cursor-not-allowed"
+              : "bg-blue hover:bg-sky-700"
+          } transition duration-300`}
+          disabled={isLoading}
         >
-          <h1>{type === "Add" ? "Validate" : "Update"}</h1>
+          {isLoading ? "Processing..." : type === "Add" ? "Add Category" : "Update Category"}
         </StyledBtn>
       </div>
-    </>
+    </div>
   );
 };
 
