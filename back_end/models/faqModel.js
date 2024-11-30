@@ -7,9 +7,8 @@ const faqSchema = new mongoose.Schema({
     required: [true, "question is required"],
     unique: true,
   },
-  description: {
+  answer: {
     type: String,
-    required: [false, "description is required"],
   },
   type: {
     type: String,
