@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { IoHomeOutline } from "react-icons/io5";
 
 const Linkbar = () => {
   const linkSigments = usePathname().split("/");
@@ -14,12 +15,7 @@ const Linkbar = () => {
           href={"/"}
           className="flex items-cener gap-2 text-xl text-zinc-800"
         >
-          <Image
-            src="/algeriePostLogo.svg"
-            alt="logo"
-            width={40}
-            height={40}
-          />
+          <IoHomeOutline />
         </Link>
         {linkSigments.map((segment, index) =>
           segment === "/" ? (
@@ -31,7 +27,7 @@ const Linkbar = () => {
               className="flex items-center gap-2 text-xl text-zinc-800"
             >
               <p className={`hover:underline ${index === linkSigments.length - 1 && "text-zinc-950 underline"}`}>{segment}</p>
-              {index !== linkSigments.length - 1 && <span>/</span>}
+              {index !== linkSigments.length - 1 && ">"}
             </Link>
           )
         )}
