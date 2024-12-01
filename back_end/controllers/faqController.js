@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Faq = require("./../models/faqModel");
 const AppError = require("./../utils/appError");
+const Workflow = require("../models/workflowModel");
 
 const getFaqs = asyncHandler(async (req, res) => {
   const faqs = await Faq.find().lean();
@@ -42,6 +43,12 @@ const createFaq = asyncHandler(async (req, res, next) => {
   faq.category = req.body.category;
 
   const newFaq = await Faq.create(faq);
+
+  await Workflow.findByIdAndUpdate(
+    req.body.workflowId,
+    { $push: { faqs: newFaq._id } },
+    { new: true }
+  );
 
   res.status(201).json({
     status: "success",

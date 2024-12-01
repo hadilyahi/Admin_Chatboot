@@ -5,7 +5,7 @@ const Category = require("../models/categoryModel");
 
 const getWorkflows = asyncHandler(async (req, res, next) => {
   try {
-    let workflows = await Workflow.find().lean();
+    let workflows = await Workflow.find().lean().populate("faqs");
     if (!workflows) {
       return res.status(404).json({
         status: "error",
