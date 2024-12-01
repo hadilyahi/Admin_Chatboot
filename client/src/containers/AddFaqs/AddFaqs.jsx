@@ -225,7 +225,7 @@ const AddFaqs = ({ type, data }) => {
               : "bg-blue text-white hover:bg-blue-700"
           } w-full py-3 rounded text-lg font-semibold`}
         >
-          {type === "Add" ? "Add FAQ" : "Update FAQ"}
+          {type === "Add" ? "Validate" : "Update FAQ"}
         </button>
       </form>
     </div>

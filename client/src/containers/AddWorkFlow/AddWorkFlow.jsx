@@ -66,6 +66,7 @@ const AddWorkFlow = ({ type = "Add" }) => {
               Name
             </label>
             <Inputs
+              className="border border-gray py-2 px-1"
               type="text"
               name="name"
               id="name"
@@ -84,6 +85,7 @@ const AddWorkFlow = ({ type = "Add" }) => {
               answer
             </label>
             <Inputs
+              className="border border-gray py-2 px-1"
               type="text"
               name="answer"
               id="answer"
@@ -128,6 +130,7 @@ const AddWorkFlow = ({ type = "Add" }) => {
               Type
             </label>
             <Inputs
+              className="border border-gray py-2 px-1"
               type="text"
               name="type"
               id="type"
@@ -167,8 +170,8 @@ const AddWorkFlow = ({ type = "Add" }) => {
           </div>
         </div>
 
-        <StyledBtn type="submit" className="mt-4 w-full bg-blue text-white py-2 rounded">
-          {type === "Add" ? "Save" : "Update"}
+        <StyledBtn type="submit" className="mt-4 w-fit px-10  bg-blue text-center text-white py-2 rounded">
+          {type === "Add" ? "Validate" : "Update"}
         </StyledBtn>
       </form>
     </div>
