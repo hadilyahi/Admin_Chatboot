@@ -13,7 +13,7 @@ const AddWorkFlow = ({ type = "Add" }) => {
   
   const workflowValidationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-    description: Yup.string().required("Description is required"),
+    answer: Yup.string().required("answer is required"),
     categoryName: Yup.string().required("Category name is required"),
     type: Yup.string().required("Type is required"),
     status: Yup.string().required("Status is required"),
@@ -23,7 +23,7 @@ const AddWorkFlow = ({ type = "Add" }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
-      description: "",
+      answer: "",
       categoryName: "",
       type: "",
       status: "",
@@ -78,21 +78,21 @@ const AddWorkFlow = ({ type = "Add" }) => {
             )}
           </div>
 
-          {/* Description */}
+          {/* answer */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium mb-1">
-              Description
+            <label htmlFor="answer" className="block text-sm font-medium mb-1">
+              answer
             </label>
             <Inputs
               type="text"
-              name="description"
-              id="description"
-              placeholder="Description"
+              name="answer"
+              id="answer"
+              placeholder="answer"
               onchange={formik.handleChange}
-              value={formik.values.description}
+              value={formik.values.answer}
             />
-            {formik.errors.description && formik.touched.description && (
-              <p className="text-red-500 text-xs">{formik.errors.description}</p>
+            {formik.errors.answer && formik.touched.answer && (
+              <p className="text-red-500 text-xs">{formik.errors.answer}</p>
             )}
           </div>
 
