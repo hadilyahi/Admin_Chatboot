@@ -1,4 +1,4 @@
-import { GET_ONE_WORKFLOW_URL, WORKFLOWS_URL , CREATE_WORKFLOW_URL } from "../const";
+import { GET_ONE_WORKFLOW_URL, WORKFLOWS_URL , CREATE_WORKFLOW_URL, UPDATE_WORKFLOW_URL } from "../const";
 
 export const getWorkflows = async () => {
     try {
@@ -47,7 +47,7 @@ export const createWorkflow = async (data) =>{
 }
 export const updateWorkflow = async (data) =>{
     try{
-        const response = await fetch(CREATE_WORKFLOW_URL, {
+        const response = await fetch(UPDATE_WORKFLOW_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
