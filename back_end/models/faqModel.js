@@ -9,7 +9,7 @@ const faqSchema = new mongoose.Schema({
   },
   answer: {
     type: String,
-    required: [true, "Answer is required"],
+    required: [false, "Answer is required"],
   },
   type: {
     type: String,

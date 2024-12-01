@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { FaTrash, FaExclamationCircle } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createFaqs } from "../../utils/api/faqs";
 import { showErrorAlert, showSuccessAlert } from "../../utils/alert";
+import { getCategories } from "../../utils/api/categories";
 
 const AddFaqs = ({ type, data }) => {
   const [types, setTypes] = useState("");
   const [answerAsArray, setAnswerAsArray] = useState([]);
   const [answerInput, setAnswerInput] = useState("");
 
-  const categories = ["Category 1", "Category 2", "Category 3"];
   const questionTypes = ["type 1", "type 2"];
 
   const addValueType1 = () => {
@@ -50,8 +50,8 @@ const AddFaqs = ({ type, data }) => {
     question: Yup.string().required("Question is required"),
     category: Yup.string().required("Category is required"),
     type: Yup.string().required("Type is required"),
-    description:
-      types === "type 2" && Yup.string().required("Description is required"),
+    answer:
+      types === "type 2" && Yup.string().required("answer is required"),
   });
 
   const formik = useFormik({
@@ -62,7 +62,7 @@ const AddFaqs = ({ type, data }) => {
       picklist: answerAsArray,
       isRequired: false,
       isActive: false,
-      description: "",
+      answer: "",
     },
     validationSchema: faqsFormValidationSchema,
     onSubmit: (values) => {
@@ -82,6 +82,16 @@ const AddFaqs = ({ type, data }) => {
       }
     },
   });
+  const [categoriesArray, setCategoriesArray] = useState([]);
+   // get categories
+   useEffect(() => {
+    getCategories()
+      .then((data) => {
+      const res = data.data.categories
+      setCategoriesArray(res);
+      console.log(res)
+    })
+  } , [])
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg p-8 my-10">
@@ -123,9 +133,9 @@ const AddFaqs = ({ type, data }) => {
               value={formik.values.category}
             >
               <option value="">Select Category</option>
-              {categories.map((category, idx) => (
-                <option key={idx} value={category}>
-                  {category}
+              {categoriesArray.map((category) => (
+                <option key={category._id} value={category.name}>
+                  {category.name}
                 </option>
               ))}
             </select>
@@ -193,15 +203,15 @@ const AddFaqs = ({ type, data }) => {
 
         {types === "type 2" && (
           <div>
-            <label htmlFor="description" className="block text-gray-600 mb-1">
-              Description
+            <label htmlFor="answer" className="block text-gray-600 mb-1">
+              answer
             </label>
             <textarea
-              id="description"
-              placeholder="Enter description"
+              id="answer"
+              placeholder="Enter answer"
               className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               onChange={formik.handleChange}
-              value={formik.values.description}
+              value={formik.values.answer}
             ></textarea>
           </div>
         )}
