@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import { TableRow } from "../../Components";
-import { AddWorkFlow, Modals, TableHead } from "../../containers";
+import { AddWorkFlow, Modals, TableHead, UpdateWorkflow } from "../../containers";
 // api
 import { getWorkflows } from "../../utils/api/workflows";
 import { showErrorAlert } from "../../utils/alert";
@@ -20,9 +20,9 @@ const WorkFlowPage = () => {
     { key: "name", label: "Name" },
     { key: "description", label: "Description" },
     { key: "status", label: "Status", isStatus: true }, // Special handling for the status column
-    { key: "rate", label: "Rate" },
-    { key: "balance", label: "Balance" },
-    { key: "deposit", label: "Deposit" },
+    { key: "created_at", label: "created_at" },
+    { key: "updated_at", label: "updated_at" },
+    { key: "last_run", label: "last_run" },
   ];
 
   const onClose = () => {
@@ -66,8 +66,8 @@ const WorkFlowPage = () => {
           name: workflow.name,
           description: workflow.description,
           status: workflow.status,
-          rate: "/",
-          balance: "/",
+          created_at: new Date(workflow.createdAt).toLocaleDateString(), // Format date here
+          updated_at: new Date(workflow.updatedAt).toLocaleDateString(),
           deposit: "/",
           workflowId: workflow.id,
         }));
@@ -75,7 +75,7 @@ const WorkFlowPage = () => {
       })
       .catch((error) => console.log(error));
   }, []);
-
+  
   return (
     <main className="flex-1 flex flex-col">
       <TableHead
@@ -100,7 +100,7 @@ const WorkFlowPage = () => {
 
       {/* update workflow */}
       <Modals isOpen={isEditOpen} onClose={onClose}>
-        <AddWorkFlow type="Update" />
+        <UpdateWorkflow type="Update" />
       </Modals>
 
       {/* delete workflow */}

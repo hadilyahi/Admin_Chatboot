@@ -45,3 +45,18 @@ export const createWorkflow = async (data) =>{
         console.error(error);
     }
 }
+export const updateWorkflow = async (data) =>{
+    try{
+        const response = await fetch(CREATE_WORKFLOW_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const data2 = await response.json();
+        return data2;
+    }catch(error){
+        console.error(error);
+    }
+}

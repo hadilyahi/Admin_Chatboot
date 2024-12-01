@@ -2,24 +2,14 @@ const mongoose = require("mongoose");
 
 const workflowSchema = new mongoose.Schema(
   {
-    name: { type: String, required: [true, "name is required"] },
-    answer: {
-      type: String,
-      required: [true, "answer is required"],
-      minlength: [10, "Workflow must be at least 10 characters long."],
-      maxlength: [100, "Workflow must be at most 100 characters long."],
-    },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: [true, "category is required"],
-    },
-    status: {
-      type: String,
-      enum: ["Active", "Inactive" ,"Scheduled" , "Queued" , "Validated"],
-    },
-    faqs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Faq", default: [] }],
+    name: { type: String, required: true },
+    answer: { type: String, required: true },
+    status: { type: String, required: true },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+    faqs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Faq" }],
+    lastRun: { type: Date, default: null }, // Add lastRun field
   },
-  { timestamps: true }
+  { timestamps: true } // Automatically add createdAt and updatedAt
 );
 
 const Workflow = mongoose.model("Workflow", workflowSchema);

@@ -11,3 +11,4 @@ export { default as WorkFlowPage } from "./WorkFlowPage/WorkFlowPage";
 export { default as FaqsPageContainer } from "./FaqsPageContainer/FaqsPageContainer"
 export { default as AddFaqs } from "./AddFaqs/AddFaqs"
 export { default as CategoriesPage } from "./CategoriesPage/CategoriesPage.jsx"
+export { default as UpdateWorkflow } from "./updateWorkflow/updateWorkflow.jsx"
